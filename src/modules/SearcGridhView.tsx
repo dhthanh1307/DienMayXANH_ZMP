@@ -1,10 +1,10 @@
 import { FC, useEffect, useState } from "react";
-import { Box, Icon } from "zmp-ui";
-import { Product } from "./type";
+import { Box } from "zmp-ui";
+import { Product } from "../components/Product/type";
 import axios from "axios";
 import React from "react";
-import { ProductItem } from "./items/itemsProductAPI";
-import { ShowMore } from "../showmore";
+import { ProductItem } from "@components/Product/ItemProduct";
+import { ShowMore } from "@components/ShowMoreButton";
 export const SearchView: FC<{ keyword: string }> = ({ keyword }) => {
     const [products, setProducts] = useState<Product[]>([]);
     const [showAll, setShowAll] = React.useState(false);
@@ -21,9 +21,9 @@ export const SearchView: FC<{ keyword: string }> = ({ keyword }) => {
                 }
             );
             setProducts(response.data.products);
-            console.log(response.data)
-            console.log(response.data.products)
-            console.log(products)
+            console.log(response.data);
+            console.log(response.data.products);
+            console.log(products);
 
 
         } catch (error) {
@@ -52,5 +52,5 @@ export const SearchView: FC<{ keyword: string }> = ({ keyword }) => {
             <ShowMore showAll={showAll} setShowAll={setShowAll} />
 
         </Box>
-    )
+    );
 };

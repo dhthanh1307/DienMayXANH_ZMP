@@ -1,11 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
-import { Box, Icon } from "zmp-ui";
-import promotions from "../../../mock/products.json"
-import { ProductItem } from "./items/item";
-import { Product } from "./type";
+import { ShowMore } from "@components/ShowMoreButton";
+import { ProductItem } from "@components/Product/ItemProduct";
 import axios from "axios";
-export const ListView: FC = () => {
+import { Product } from "../components/Product/type";
+export const Recommend: FC = () => {
+    const [showAll, setShowAll] = React.useState(false);
     const [products, setProducts] = useState<Product[]>([]);
+    const displayed = showAll ? products : products.slice(0, 6);
     useEffect(() => {
         const fetchProducts = async () => {
             try {
@@ -18,9 +19,9 @@ export const ListView: FC = () => {
                     }
                 );
                 setProducts(response.data.products);
-                console.log(response.data)
-                console.log(response.data.products)
-                console.log(products)
+                console.log(response.data);
+                console.log(response.data.products);
+                console.log(products);
 
 
             } catch (error) {
@@ -34,12 +35,11 @@ export const ListView: FC = () => {
         console.log("Fecth product", products);
     }, [products]);
     return (
-        <div className="overflow-x-auto scrollbar-hidden mx-2 bg-white">
-            <div className="inline-flex gap-2 py-2">
-                {products.map((product, index) => (
-                    <ProductItem key={index} product={product} />
-                ))}
-            </div>
+        <div className="flex flex-wrap gap-4 justify-center items-center bg-white py-4 ">
+            {displayed.map((promotion, index) => (
+                <ProductItem key={index} product={promotion} />
+            ))}
+            <ShowMore showAll={showAll} setShowAll={setShowAll} />
         </div>
-    )
+    );
 };

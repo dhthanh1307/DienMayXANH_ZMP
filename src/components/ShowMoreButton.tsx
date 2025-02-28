@@ -3,7 +3,7 @@ import {Icon} from "zmp-ui";
 
 interface ShowMoreProps {
     showAll: boolean;
-    setShowAll: (value: boolean) => void;
+    setShowAll: (value:boolean) => void;
 }
 
 export const ShowMore: React.FC<ShowMoreProps> = ({ showAll, setShowAll }) => {

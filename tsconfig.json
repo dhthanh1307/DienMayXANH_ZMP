@@ -36,12 +36,19 @@
     "types": [
       "vite/client"
     ],
-    "baseUrl": "src"
+    "baseUrl": "./",
+    "paths": {
+      "@components/*": ["src/components/*"],
+      "@modules/*": ["src/modules/*"],
+      "@pages/*": ["src/pages/*"],
+      "@product/*":["src/components/Product/*"],
+      "@mock/*":["mock"]
+    }
   },
   "exclude": [
     "node_modules"
   ],
   "include": [
     "src"
-  ]
+  ],
 }

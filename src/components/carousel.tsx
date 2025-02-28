@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { Box, Swiper } from "zmp-ui";
-import images from "../../mock/images.json"
+import { Swiper } from "zmp-ui";
+import images from "../../mock/images.json";
 export const Carousel : FC = () => {
     return (
         <div className="m-2">
@@ -13,5 +13,5 @@ export const Carousel : FC = () => {
                     </Swiper.Slide>))}
             </Swiper>
         </div>
-    )
+    );
 };

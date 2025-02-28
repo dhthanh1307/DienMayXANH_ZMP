@@ -1,11 +1,11 @@
-import React, { FC, useEffect, useState } from "react"
-import { Box,Button } from "zmp-ui"
-import { ShowMore } from "../showmore"
+import React, { FC, useEffect, useState } from "react";
+import { Button } from "zmp-ui";
+import { ShowMore } from "@components/ShowMoreButton";
 import axios from "axios";
-import { Product } from "./type";
+import { Product } from "@components/Product/type";
 import { useNavigate } from "react-router-dom";
 
-export const DiscountProduct: FC = () => {
+export const ProductDiscount: FC = () => {
     const [showAll, setShowAll] = React.useState(false);
     const [products, setProducts] = useState<Product[]>([]);
     const displayedPromotions = showAll ? products : products.slice(0, 6);
@@ -21,9 +21,9 @@ export const DiscountProduct: FC = () => {
                     }
                 );
                 setProducts(response.data.products);
-                console.log(response.data)
-                console.log(response.data.products)
-                console.log(products)
+                console.log(response.data);
+                console.log(response.data.products);
+                console.log(products);
 
 
             } catch (error) {
@@ -36,10 +36,10 @@ export const DiscountProduct: FC = () => {
     useEffect(() => {
         console.log("Fecth product", products);
     }, [products]);
-    const navigate=useNavigate()
+    const navigate=useNavigate();
     const handleDetail=(product:Product)=>{
-        navigate('/detail',{state:{product}})
-    }
+        navigate("/detail",{state:{product}});
+    };
     return (
         <div className="flex flex-wrap gap-4 justify-center items-center bg-white py-4">
             {displayedPromotions.map((promotion, index) => (
@@ -47,12 +47,12 @@ export const DiscountProduct: FC = () => {
                     <div className="w-30 h-36  flex  justify-center items-center">
                         <img src={promotion.thumbnail} className="w-30 h-36" />
                     </div>
-                    <div className="m-2 w-full text-[12px]">
+                    <div className="m-2 w-full text-12">
                         <span>
                             {promotion.title}
                         </span>
                         <div  >
-                            <div className="text-red-600 font-bold text-[14px]">
+                            <div className="text-red-600 font-bold text-14">
                                 {(promotion.price * (100 - promotion.discountPercentage) / 100).toLocaleString("vi-VN")} ₫
                             </div>
                             <del className="text-gray-300 ">
@@ -61,7 +61,7 @@ export const DiscountProduct: FC = () => {
                             <span className="text-red-600"> -{promotion.discountPercentage}%</span>
 
                         </div>
-                        <div className="text-[10px] my-1  bg-yellow-100 w-full rounded-xl text-center flex"
+                        <div className="text-10 my-1  bg-yellow-100 w-full rounded-xl text-center flex"
                             style={{
                                 background: `linear-gradient(to right, #facc15 ${(promotion.stock / 100) * 100}%, #e5e7eb ${(promotion.stock / 100) * 100}%)`,
                             }}>

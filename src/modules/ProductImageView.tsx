@@ -1,6 +1,5 @@
 import React, { FC } from "react";
-import { Box, ImageViewer, Swiper } from "zmp-ui";
-// import images from "../../mock/images.json"
+import { Swiper } from "zmp-ui";
 export const ImageView: FC<{ images: string[] }> = ({ images }) => {
     return (
         <div className="m-2">
@@ -22,5 +21,5 @@ export const ImageView: FC<{ images: string[] }> = ({ images }) => {
             </div>
         </div>
 
-    )
+    );
 };

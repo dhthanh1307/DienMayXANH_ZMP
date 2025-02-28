@@ -1,11 +1,11 @@
 import React, { FC } from "react";
-import { Box, Swiper } from "zmp-ui";
+import { Swiper } from "zmp-ui";
 export const Discount: FC = () => {
     return (
         <Swiper loop={false}
             autoplay={true}
             className="w-full bg-white">
-            <Swiper.Slide key={`slide-1`}>
+            <Swiper.Slide key={"slide-1"}>
                 <div className="w-full h-12 flex justify-center items-center">
                     {[
                         "https://cdnv2.tgdd.vn/mwg-static/common/Campaign/d9/2f/d92f547da2b474af28bab4130f81c292.png",
@@ -21,7 +21,7 @@ export const Discount: FC = () => {
 
             </Swiper.Slide>
 
-            <Swiper.Slide key={`slide-2`} className="w-full h-13 flex justify-center items-center pt-3 ">
+            <Swiper.Slide key={"slide-2"} className="w-full h-13 flex justify-center items-center pt-3 ">
                 {["Máy giặt", "Máy lọc nước", "Ti vi", "Nồi chiên"].map((text, index) => (
                         <span key={index} className="w-16 mx-4">{text}</span>
                 ))}

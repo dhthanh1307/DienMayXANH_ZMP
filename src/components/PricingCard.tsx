@@ -13,10 +13,21 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
     const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
     const [toast, setToast] = useState(false);
 
-    const handleAddToCart = (product: Product) => {
-        if (!selectedProvince) { setIsOpenLocation(true); }
-        dispatch(addToCart({ product }));
+    const handleAddToCart = async (product: Product) => {
+        if (!selectedProvince) {
+            setIsOpenLocation(true);
+            setToast(true);
+        }
+        await dispatch(addToCart({ product }));
         setToast(true);
+    }
+    const handleBuy = async (product: Product) => {
+        if (!selectedProvince) {
+            setIsOpenLocation(true);
+            return;
+        }
+        await handleAddToCart(product);
+        navigate('/cart')
     }
     useEffect(() => {
         let timer: ReturnType<typeof setTimeout> | null = null;
@@ -133,7 +144,7 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
                             <i className="icondetail-addtocart" />
                             <div className="text-center text-blue-400">Thêm vào giỏ</div>
                         </div>
-                        <div onClick={()=>navigate('/cart')} className="flex w-1/2 items-center  justify-center rounded-lg bg-orange text-center">
+                        <div onClick={() => { handleBuy(product) }} className="flex w-1/2 items-center  justify-center rounded-lg bg-orange text-center">
                             <span className="my-2.5">Mua ngay </span>
                         </div>
                     </div>

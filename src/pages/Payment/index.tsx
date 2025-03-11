@@ -3,7 +3,7 @@ import { SearchView } from "@modules/SearchGridView";
 import { RootState } from "@store/store";
 import React, { } from "react";
 import { useSelector } from "react-redux";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Page } from "zmp-ui";
 
 const PaymentPage: React.FunctionComponent = () => {
@@ -11,7 +11,7 @@ const PaymentPage: React.FunctionComponent = () => {
     const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location)
     const { products, counts } = useSelector((state: RootState) => state.cart)
     const keyword = location.state?.keyword;
-
+    const navigate=useNavigate();
     return (
         <Page className="overflow-y-auto">
             <Search />
@@ -91,7 +91,7 @@ const PaymentPage: React.FunctionComponent = () => {
                         </div>
                     </div>
                 </div>
-                <div className="text-navi border border-navi p-2.5 text-center">Mua thêm sản phẩm khác</div>
+                <div onClick={()=>navigate('/')} className="text-navi border border-navi p-2.5 text-center">Mua thêm sản phẩm khác</div>
             </div>
         </Page>);
 };

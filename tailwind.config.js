@@ -6,6 +6,7 @@ module.exports = {
   theme: {
     extend: {
       fontSize: {
+        6: "6px",
         10: "10px",
         11: "11px",
         12: "12px",
@@ -29,11 +30,14 @@ module.exports = {
         navi: "#2A83E9",
         softgray: "#F2F4F7",
         lightgray: "#EAECF0",
+        blackgray: "#344054",
         gray1: "#dbdfe5",
         drakblue: "#005284",
-        orange: "#FC7600"
+        orange: "#FC7600",
+        red: "#DD2F2C"
       },
       width: {
+        54: "54px",
         70: "70px",
         80: "80px",
         90: "90px",
@@ -47,7 +51,7 @@ module.exports = {
         320: "320px",
         360: "360px",
         450: "450px",
-        500:"500px"
+        500: "500px"
       },
       height: {
         70: "70px",
@@ -62,7 +66,7 @@ module.exports = {
         360: "360px",
         400: "400px",
         450: "450px",
-        500:"500px"
+        500: "500px"
       },
       padding: {
         0.5: "2px",
@@ -73,5 +77,9 @@ module.exports = {
         2.5: "10px"
       }
     },
+  },
+  plugins: [require("daisyui")],
+  daisyui: {
+    themes: ["light", "dark"],
   },
 };

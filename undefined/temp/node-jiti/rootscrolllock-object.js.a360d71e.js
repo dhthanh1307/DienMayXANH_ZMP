@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});exports. default = {":root:has( .modal-open, .modal[open], .modal:target, .modal-toggle:checked, .drawer:not([class*=\"drawer-open\"]) > .drawer-toggle:checked )":{"overflow":"hidden"}}; /* v7-5be561a333c5ad78 */

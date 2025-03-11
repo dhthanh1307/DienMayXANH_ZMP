@@ -7,9 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 export const Recommend: FC = () => {
     const showAll = useSelector((state: RootState) => state.showmore.showMoreById["productGridView"] ?? false);
-
     const products = useSelector((state: RootState) => state.products.category);
-
     const dispatch = useDispatch<AppDispatch>();
 
     const displayed = useMemo(
@@ -22,9 +20,11 @@ export const Recommend: FC = () => {
     }, [dispatch]);
 
     return (
-        <div className="flex flex-wrap items-center justify-center gap-4 bg-white py-4 ">
+        <div className="flex flex-wrap items-center justify-center bg-white py-4">
             {displayed.map((promotion, index) => (
-                <ProductItem key={index} product={promotion} />
+                <div className="w-1/2" key={index}>
+                    <ProductItem  product={promotion} />
+                </div>
             ))}
             <ShowMore id="productGridView" />
         </div>

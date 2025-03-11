@@ -1,6 +1,5 @@
 import { AssuranceItem } from "@components/Assurance/itemAssurance";
-import React from "react";
-import { FC } from "react";
+import React, { FC } from "react";
 
 export const Assurance: FC = () => {
     return (

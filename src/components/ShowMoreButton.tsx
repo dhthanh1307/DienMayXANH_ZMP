@@ -6,7 +6,6 @@ import { Icon } from "zmp-ui";
 
 export const ShowMore: React.FC<{id:string}> = ({id}) => {
     const showAll = useSelector((state: RootState) => state.showmore.showMoreById[id]??false);
-
     const dispatch = useDispatch<AppDispatch>();
 
     if (showAll) return null;

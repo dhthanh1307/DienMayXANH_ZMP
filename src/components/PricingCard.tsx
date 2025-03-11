@@ -1,16 +1,36 @@
 import { Location } from "@components/Location";
 import { Product } from "@product/type";
-import { RootState } from "@store/store";
-import React, { FC, useState } from "react";
-import { useSelector } from "react-redux";
+import { addToCart } from "@store/cartReducer";
+import { AppDispatch, RootState } from "@store/store";
+import React, { FC, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const PricingCard: FC<{ product: Product }> = ({ product }) => {
     const [isOpenLocation, setIsOpenLocation] = useState(false);
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
+    const [toast, setToast] = useState(false);
 
+    const handleAddToCart = (product: Product) => {
+        if (!selectedProvince) { setIsOpenLocation(true); }
+        dispatch(addToCart({ product }));
+        setToast(true);
+    }
+    useEffect(() => {
+        let timer: ReturnType<typeof setTimeout> | null = null;
+        if (toast) {
+            timer = setTimeout(() => setToast(false), 3000);
+        }
+        return () => {
+            if (timer) {
+                clearTimeout(timer);
+            }
+        };
+    }, [toast]);
     return (
-        <div className="mt-2 rounded-xl bg-red-600 pb-1 text-white">
+        <div className="mt-2 rounded-xl bg-red pb-1 text-white">
             <div className="flex flex-wrap p-2">
                 <div>
                     <div className="text-16 font-bold text-white">
@@ -26,9 +46,9 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
                         <span className="text-14 text-white">   (-{product.discountPercentage}%)</span>
                     </div>
                 </div>
-                <div className="mx-auto ms-16">
+                <div className="flex-grow ms-16">
                     <span>Kết thúc sau</span>
-                    <div className="my-1 flex h-2  w-180 rounded-xl bg-yellow-100 text-center text-10"
+                    <div className="my-1 w-full flex h-2  rounded-xl bg-yellow-100 text-center text-10"
                         style={{
                             background: `linear-gradient(to right,#faeec0,  #facc15 ${(product.stock / 100) * 100}%, #e5e7eb ${(product.stock / 100) * 100}%)`,
                         }}
@@ -51,7 +71,7 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
                     </div>
                     <hr />
                 </div>
-                <div className="m-2 h-90 rounded-lg bg-yellow-100 text-red-400 ">
+                <div className="m-2 h-90 rounded-lg bg-yellow-100 text-red ">
                     <div className="p-4">
                         <li> Không áp dụng kèm khuyến mãi khác </li>
                         <li> Không áp dụng mua buôn/mua sỉ</li>
@@ -99,29 +119,30 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
                             </div>
                         </div>
                     </div>
-                    <div className=" text-12 text-black flex gap-1">
+                    <div className=" flex gap-1 text-12 text-black">
                         <span className="font-bold">
-                            +2.945 
+                            +2.945
                         </span>
                         <span>
-                             điểm tích lũy Quà tặng VIP
+                            điểm tích lũy Quà tặng VIP
                         </span>
                     </div>
-                    <div className=" flex h-12 gap-2 pb-4">
-                        <div className=" flex w-1/2 items-center justify-center rounded-lg border border-blue-400 text-center">
-                            <img className="h-10" src="https://cdn-icons-png.flaticon.com/512/5166/5166615.png" />
-                            <span className="text-center text-blue-400">Thêm vào giỏ</span>
+                    <div className=" flex gap-2 pb-4 text-16 ">
+                        <div onClick={() => handleAddToCart(product)}
+                            className=" w-1/2 rounded-lg border border-blue-400 p-1 text-center">
+                            <i className="icondetail-addtocart" />
+                            <div className="text-center text-blue-400">Thêm vào giỏ</div>
                         </div>
-                        <div className="flex w-1/2 items-center p-2.5 justify-center rounded-lg bg-orange text-center">
-                            <span>Mua ngay </span>
+                        <div onClick={()=>navigate('/cart')} className="flex w-1/2 items-center  justify-center rounded-lg bg-orange text-center">
+                            <span className="my-2.5">Mua ngay </span>
                         </div>
                     </div>
                     <div className="flex items-center gap-1">
-                        <img src="https://cdn-icons-png.flaticon.com/512/17147/17147304.png" className="size-4" />
+                        <i className="icondetail-hotline" />
                         <span className="text-14 text-black">Gọi đặt mua <span className="text-navi">1900 232 461</span> (8:00-21:30)</span>
                     </div>
                     <div className="flex items-center gap-1 pb-4">
-                        <img src="https://cdn-icons-png.flaticon.com/512/15524/15524222.png" className="size-4" />
+                        <i className="icondetail-store" />
                         <span className="text-14 text-navi">Siêu thị có hàng</span>
                     </div>
                 </div>
@@ -129,8 +150,14 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
             <div className="text-black">
                 <Location isOpen={isOpenLocation} onClose={() => setIsOpenLocation(false)} />
             </div>
-
-
+            {toast && (<div className="toast absolute top-12 right-1 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
+                <div>
+                    <i className="view-cart" />
+                    <span>Đã thêm vào giỏ hàng</span>
+                </div>
+                <div onClick={() => navigate('/cart')} className=" rounded-lg bg-lightblue p-2.5 text-center text-16 font-bold text-navi">Xem giỏ hàng</div>
+            </div>)
+            }
         </div>
     );
 };

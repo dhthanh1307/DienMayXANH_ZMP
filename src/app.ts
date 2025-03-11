@@ -4,7 +4,6 @@ import "zmp-ui/zaui.css";
 import React from "react";
 import { createRoot } from "react-dom/client";
 
-// import "./css/app.scss";
 import appConfig from "../app-config.json";
 if (!window.APP_CONFIG) {
   window.APP_CONFIG = appConfig;

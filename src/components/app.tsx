@@ -1,5 +1,7 @@
+import CartPage from "@pages/Cart";
 import DetailPage from "@pages/Detail";
 import HomePage from "@pages/Home";
+import PaymentPage from "@pages/Payment";
 import SearchPage from "@pages/Search";
 import {store} from "@store/store"
 import React from "react";
@@ -18,6 +20,8 @@ const MyApp = () => {
               <Route path="/" element={<HomePage />} />
               <Route path="/search" element={<SearchPage />} />
               <Route path="/detail" element={<DetailPage />} />
+              <Route path="/cart" element={<CartPage />} />
+              <Route path="/payment" element={<PaymentPage />} />
             </AnimationRoutes>
           </ZMPRouter>
         </SnackbarProvider>

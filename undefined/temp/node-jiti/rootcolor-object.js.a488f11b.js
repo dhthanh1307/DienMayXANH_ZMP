@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});exports. default = {":root,\n[data-theme]":{"background-color":"var(--root-bg, var(--color-base-100))","color":"var(--color-base-content)"}}; /* v7-5bd498be454e7155 */

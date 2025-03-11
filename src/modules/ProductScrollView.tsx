@@ -9,7 +9,7 @@ export const ListView: FC = () => {
         state.products.category
     )
 
-    const dispatch=useDispatch<AppDispatch>();
+    const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
         dispatch(fetchProductCategory());
@@ -20,9 +20,11 @@ export const ListView: FC = () => {
 
     return (
         <div className="mx-2 overflow-x-auto bg-white">
-            <div className="inline-flex gap-2 py-2">
+            <div className="inline-flex py-2">
                 {products.map((product, index) => (
-                    <ProductItem key={index} product={product} />
+                    <div className="w-180"  key={index}>
+                        <ProductItem product={product} />
+                    </div>
                 ))}
             </div>
         </div>

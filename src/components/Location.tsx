@@ -11,9 +11,7 @@ interface DrawerProps {
 
 export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
     const { provinces, wards, districts, selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
-
     const [tab, setTab] = useState<string>("province");
-
     const dispatch = useDispatch<AppDispatch>();
 
     useEffect(() => {
@@ -60,7 +58,7 @@ export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
                 (<div className="m-2.5 bg-white ">
                     <div className=" rounded-lg border p-2">
                         <input
-                            className="w-full  text-14 focus:outline-none"
+                            className="w-full bg-white text-14 focus:outline-none"
                             type="text"
                             placeholder="Số nhà tên đường"
                             value={selectedStreet || ""}
@@ -78,13 +76,13 @@ export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
                             <Icon icon="zi-search" size={20} />
                         </div>
                         <input
-                            className="w-full  text-14 focus:outline-none"
+                            className="w-full  bg-white text-14 focus:outline-none"
                             type="text"
                             placeholder="Tìm nhanh tỉnh thành, quận huyện, phường xã" />
                     </div>
                     <div className="m-2.5 flex items-center justify-center gap-2 text-14">
                         <hr className="w-32" />
-                        <span>Hoặc chọn</span>
+                        <span className="text-nowrap">Hoặc chọn</span>
                         <hr className="w-32" />
                     </div>
                     <div className="flex px-2 text-center">

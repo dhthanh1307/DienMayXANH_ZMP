@@ -1,5 +1,6 @@
-import React, { FC, useState } from "react";
 import { MenuItem } from "@components/Menu/itemMenu";
+import React, { FC, useState } from "react";
+
 import categories from "../../mock/categories.json"
 interface DrawerProps {
     isOpen: boolean;
@@ -31,7 +32,7 @@ export const Menu: FC<DrawerProps> = ({ isOpen, onClose }) => {
                     )
                     )}
                 </div>
-                <div className="ms-3 h-500 flex flex-wrap justify-center bg-white p-2">
+                <div className="ms-3 flex h-500 flex-wrap justify-center bg-white p-2">
                     <div className="w-full text-14 font-bold uppercase">{selected}</div>
                     <div className="flex h-450 w-full flex-wrap overflow-y-auto">
                         {categories.map((category, index) => (

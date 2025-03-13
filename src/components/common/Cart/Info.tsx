@@ -1,7 +1,7 @@
-import { Product } from "@components/Product/type";
+import { ProductType } from "@type/index";
 import React, { FC } from "react";
 
-export const CartInfo: FC<{product:Product,count:number}> = ({product,count  }) => {
+export const CartInfo: FC<{product:ProductType,count:number}> = ({product,count  }) => {
     return (
         <div className="py-2.5">
             <div className="rounded-tl-lg rounded-tr-lg border p-2.5">

@@ -1,6 +1,5 @@
 import { Banner } from "@components/Banner/Banner";
-import { Search } from "@modules/Search";
-import { SearchView } from "@modules/SearchGridView";
+import { Search, SearchView } from "@modules/index";
 import React, { } from "react";
 import { useLocation } from "react-router-dom";
 import { Page } from "zmp-ui";
@@ -13,8 +12,8 @@ const SearchPage: React.FunctionComponent = () => {
     return (
         <Page className="overflow-y-auto">
             <Banner
-                src="https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/74/f3/74f3c5d044c73bf888d60d1db1307080.gif"
-                className="h-9 w-full"
+                src={["https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/74/f3/74f3c5d044c73bf888d60d1db1307080.gif"]}
+                className="w-full"
                 containerClassName="bg-darkblue justify-center flex" />
             <Search />
             <div className="flex h-12 items-center gap-4 bg-white px-2 font-bold">

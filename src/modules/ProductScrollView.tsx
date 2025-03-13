@@ -1,23 +1,10 @@
-import { ProductItem } from "@components/Product/ItemProduct";
-import { fetchProductCategory } from "@store/productReducer";
-import { AppDispatch, RootState } from "@store/store";
+import { ProductItem } from "@components/index";
+import { categoryReselector } from "@utilities/productReselector";
 import React, { FC, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import {  useSelector } from "react-redux";
 
 export const ListView: FC = () => {
-    const products = useSelector((state: RootState) =>
-        state.products.category
-    )
-
-    const dispatch = useDispatch<AppDispatch>();
-
-    useEffect(() => {
-        dispatch(fetchProductCategory());
-    }, [dispatch]);
-
-    useEffect(() => {
-    }, [products]);
-
+    const products = useSelector(categoryReselector);
     return (
         <div className="mx-2 overflow-x-auto bg-white">
             <div className="inline-flex py-2">

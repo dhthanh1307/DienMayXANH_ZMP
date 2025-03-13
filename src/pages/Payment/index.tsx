@@ -1,21 +1,24 @@
-import { Search } from "@modules/Search";
-import { SearchView } from "@modules/SearchGridView";
+import { Search } from "@modules/index";
 import { RootState } from "@store/store";
+import { cartReselector } from "@utilities/cartReselector";
 import React, { } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Page } from "zmp-ui";
 
 const PaymentPage: React.FunctionComponent = () => {
-    const location = useLocation();
     const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location)
+
     const { products, counts } = useSelector((state: RootState) => state.cart)
-    const keyword = location.state?.keyword;
-    const navigate=useNavigate();
+
+    const navigate = useNavigate();
+
+    const total=useSelector(cartReselector)
+
     return (
         <Page className="overflow-y-auto">
             <Search />
-            <div className="text-center text-green-600 font-bold  m-2.5">
+            <div className="m-2.5 text-center font-bold  text-green-600">
                 <i className="iconcart-thankyou-succcess" />
                 ĐẶT HÀNG THÀNH CÔNG
             </div>
@@ -24,10 +27,10 @@ const PaymentPage: React.FunctionComponent = () => {
                 <div>
                     Cảm ơn anh <span className="font-bold">Nguyễn Văn A</span> đã cho điện máy XANH cơ hội phục vụ.
                 </div>
-                <div className=" bg-lightgray p-2.5 mt-3">
+                <div className=" mt-3 bg-lightgray p-2.5">
                     <div className="flex justify-between">
                         <div>ĐƠN HÀNG: #98987654</div>
-                        <div className="space-x-2 flex">
+                        <div className="flex space-x-2">
                             <span className="text-navi">Quản lý đơn hàng</span>
                             <span className="text-red">Hủy</span>
                         </div>
@@ -50,17 +53,17 @@ const PaymentPage: React.FunctionComponent = () => {
                     </li>
                     <li>
                         <span className="font-bold">Tổng tiền: </span>
-                        <span className="text-16 font-bold text-red">{products.reduce((total, product, index) => total + (product.price * (100 - product.discountPercentage) / 100) * counts[index], 0).toLocaleString("vi-VN")} đ</span>
+                        <span className="text-16 font-bold text-red">{total.toLocaleString("vi-VN")} đ</span>
                     </li>
                 </div>
-                <div className="bg-lightblue mt-2 p-2.5 flex ">
+                <div className="mt-2 flex bg-lightblue p-2.5 ">
                     <div className="w-fit px-2">
                         <i className="iconcart-AccumulatePoints " />
                     </div>
 
                     <div >Bạn tích được <span className="font-bold">1000</span> điểm cho đơn hàng này. Xem hướng dẫn dùng điểm <span className="text-navi">tại đây</span></div>
                 </div>
-                <div className="text-green-500 bg-green-50 border border-green-500 p-2.5 rounded-lg text-center my-2"> Đơn hàng chưa được thanh toán </div>
+                <div className="my-2 rounded-lg border border-green-500 bg-green-50 p-2.5 text-center text-green-500"> Đơn hàng chưa được thanh toán </div>
                 <div className="my-1 bg-white px-2.5 py-4">
                     <div className="text-16 font-bold">Hình thức thanh toán </div>
                     <div className="flex items-center  gap-1 py-2 text-14 text-blackgray">
@@ -75,23 +78,23 @@ const PaymentPage: React.FunctionComponent = () => {
                     </div>
                     <div className="text-navi">5 hình thức thanh toán khác</div>
                 </div>
-                <div className="font-bold text-white bg-[#90C8FC] p-2.5 text-center rounded-lg">Xác nhận</div>
-                <div className="text-navi text-center mt-5">Xem chính sách hoàn tiền online</div>
+                <div className="rounded-lg bg-[#90C8FC] p-2.5 text-center font-bold text-white">Xác nhận</div>
+                <div className="mt-5 text-center text-navi">Xem chính sách hoàn tiền online</div>
                 <div className="my-2.5 ">THỜI GIAN NHẬN HÀNG</div>
-                <div className="p-2.5 my-2.5  text-14 border">
+                <div className="my-2.5 border  p-2.5 text-14">
                     <div>   Giao trước 16h00 Hôm nay (11/03)</div>
                     <div className="flex gap-2">
                         <img src={products[0]?.thumbnail} className="w-12 " />
                         <div >
                             <div>{products[0]?.title} </div>
-                            <div className="text-gray-400 text-12 flex gap-4">
+                            <div className="flex gap-4 text-12 text-gray-400">
                                 <div>Màu: Trắng</div>
                                 <div>Số lượng {counts[0]}</div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div onClick={()=>navigate('/')} className="text-navi border border-navi p-2.5 text-center">Mua thêm sản phẩm khác</div>
+                <div onClick={() => navigate('/')} className="border border-navi p-2.5 text-center text-navi">Mua thêm sản phẩm khác</div>
             </div>
         </Page>);
 };

@@ -1,11 +1,11 @@
-import { Product } from "@components/Product/type";
+import {ProductType} from "@type/index";
 import React, { FC } from "react";
 import { Icon, useNavigate } from "zmp-ui";
 
-export const ProductItem: FC<{ product: Product }> = ({ product }) => {
+export const ProductItem: FC<{ product: ProductType }> = ({ product }) => {
     const navigate = useNavigate();
 
-    const handleDetail = (product: Product) => {
+    const handleDetail = (product: ProductType) => {
         navigate("/detail", { state: { product } });
     };
 

@@ -1,31 +1,52 @@
-import "../icon/icon.css";
+import "../css/icon.css";
 
-import { Location } from "@components/Location"
-import { Menu } from "@components/Menu";
+import { Location, Menu } from "@components/index";
 import { RootState } from "@store/store";
-import React, { FC, useMemo, useState } from "react";
+import { ProductType } from "@type/ProductType";
+import { categoryReselector } from "@utilities/productReselector";
+import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Box, Icon } from "zmp-ui";
 
 export const Search: FC = () => {
     const navigate = useNavigate();
-    const [keyword, setKeyword] = useState("");
-    const [isOpenDrawer, setIsOpenDrawer] = useState(false);
-    const [isOpenLocation, setIsOpenLocation] = useState(false);
-    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location)
-    const { counts } = useSelector((state: RootState) => state.cart);
-    const totalCount = counts.reduce((sum, count) => sum + count, 0);
 
+    const [keyword, setKeyword] = useState("");
+
+    const [isOpenDrawer, setIsOpenDrawer] = useState(false);
+
+    const [isOpenLocation, setIsOpenLocation] = useState(false);
+
+    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location)
+
+    const { counts } = useSelector((state: RootState) => state.cart);
+
+    const totalCount = counts.reduce((sum, count) => sum + count, 0);
+    const [isFocused, setIsFocused] = useState(false);
+    const products = useSelector(categoryReselector);
+    const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
     const handleSearch = () => {
         navigate("/search", { state: { keyword } });
     };
+
     const handleCart = () => {
         navigate("/cart");
     }
+
     const handleHome = () => {
         navigate("/");
     };
+    useEffect(() => {
+        if (keyword.trim() !== "") {
+            const results = products.filter((product) =>
+                product.title.toLowerCase().includes(keyword.toLowerCase())
+            );
+            setFilteredProducts(results);
+        } else {
+            setFilteredProducts([]);
+        }
+    }, [keyword]);
 
     return (
         <Box className="bg-navi ">
@@ -45,7 +66,7 @@ export const Search: FC = () => {
                             selectedProvince?.name,
                         ]
                             .filter(Boolean)
-                            .join(', ')} onChange={()=>{}} />
+                            .join(', ')} onChange={() => { }} />
                     <Icon icon="zi-chevron-right" size={16} />
                 </div>
                 <div className="flex h-8 w-90 items-center justify-center rounded-2xl bg-softblue text-10 text-white">
@@ -53,22 +74,44 @@ export const Search: FC = () => {
                     <span className="text-nowrap p-1">Đăng nhập</span>
                 </div>
             </div>
-            <div className="flex  w-full justify-center px-2.5  pb-2">
+            <div className="flex  w-full justify-center px-2.5  pb-2 relative">
                 <div onClick={() => setIsOpenDrawer(true)} className="flex w-10 items-center justify-center rounded-l-lg bg-softgray p-2">
                     <i className="iconnewglobal-menu" />
                 </div>
                 <div className="flex w-full  items-center justify-center bg-white">
                     <div onClick={() => handleSearch()}><i className="icon-search m-2" /></div>
                     <input
-                        className="w-full bg-white p-1 text-13 focus:outline-none"
+                        className="w-full bg-white p-1 text-13 focus:outline-none "
                         type="text"
-                        placeholder="Bạn tìm gì..." value={keyword} onChange={(e) => setKeyword(e.target.value)} />
+                        placeholder="Bạn tìm gì..." value={keyword} onChange={(e) => setKeyword(e.target.value)}
+                        onFocus={() => setIsFocused(true)}
+                        onBlur={() => setTimeout(() => setIsFocused(false), 0)} />
                 </div>
+
                 <div onClick={() => handleCart()} className="relative flex w-10 items-center justify-center rounded-r-lg bg-softgray">
-                    {(totalCount>0)&&(<span className="cart-number">{totalCount}</span>)}
+                    {(totalCount > 0) && (<span className="cart-number">{totalCount}</span>)}
                     <i className="iconnewglobal-blackcart" />
                 </div>
+                {isFocused && filteredProducts.length > 0 && (
+                    <div className=" w-full h-180 overflow-y-auto absolute top-10 ">
+                        <div className="mx-2.5   rounded-lg ">
+                            <div className="w-full rounded-tl-lg rounded-tr-lg p-2.5 bg-lightgray">
+                                Có phải bạn muốn tìm
+                            </div>
+                            <div className="bg-white w-full ">
+                                {filteredProducts.map((product) => (
+                                    <div key={product.title} className="px-2.5 ">
+                                        {product.title}
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </div>
+                )}
+
+
             </div>
+
             <Menu isOpen={isOpenDrawer} onClose={() => setIsOpenDrawer(false)} />
             <Location isOpen={isOpenLocation} onClose={() => setIsOpenLocation(false)} />
         </Box>

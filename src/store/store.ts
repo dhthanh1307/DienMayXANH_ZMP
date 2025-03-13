@@ -1,16 +1,17 @@
 import {configureStore} from "@reduxjs/toolkit";
-import cartReducer from "@store/cartReducer";
-import locationReducer from "@store/locationReducer";
-import productReducer from "@store/productReducer";
-import showmoreReducer from "@store/showmoreReducer";
-export const store =configureStore({
-    reducer: {
-        products: productReducer,
-        showmore: showmoreReducer,
-        location: locationReducer,
-        cart: cartReducer,
-    },
+import { createEpicMiddleware } from "redux-observable";
+
+import { rootEpic } from "./rootEpic";
+import { rootReducer } from "./rootReducer";
+const epicMiddleware = createEpicMiddleware();
+
+export const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(epicMiddleware)
 });
+
+epicMiddleware.run(rootEpic);
 
 export type RootState=ReturnType<typeof store.getState>;
 export type AppDispatch= typeof store.dispatch;

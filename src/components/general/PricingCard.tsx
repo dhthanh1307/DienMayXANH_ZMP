@@ -1,45 +1,61 @@
 import { Location } from "@components/Location";
-import { Product } from "@product/type";
-import { addToCart } from "@store/cartReducer";
-import { AppDispatch, RootState } from "@store/store";
+import { useAppDispatch } from "@hooks/useAppDispatch";
+import { addToCart } from "@store/slices/cartSlice";
+import { RootState } from "@store/store";
+import { ProductType } from "@type/index";
 import React, { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { min } from "rxjs";
 
-export const PricingCard: FC<{ product: Product }> = ({ product }) => {
+export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
     const [isOpenLocation, setIsOpenLocation] = useState(false);
+
     const navigate = useNavigate();
-    const dispatch = useDispatch<AppDispatch>();
+
+    const dispatch = useAppDispatch();
+
     const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
+
     const [toast, setToast] = useState(false);
 
-    const handleAddToCart = async (product: Product) => {
+    const handleAddToCart = async (product: ProductType) => {
         if (!selectedProvince) {
             setIsOpenLocation(true);
+
             setToast(true);
         }
+
         await dispatch(addToCart({ product }));
+
         setToast(true);
     }
-    const handleBuy = async (product: Product) => {
+
+    const handleBuy = async (product: ProductType) => {
         if (!selectedProvince) {
             setIsOpenLocation(true);
+
             return;
         }
+
         await handleAddToCart(product);
+
         navigate('/cart')
     }
+
     useEffect(() => {
         let timer: ReturnType<typeof setTimeout> | null = null;
         if (toast) {
             timer = setTimeout(() => setToast(false), 3000);
         }
+
         return () => {
             if (timer) {
                 clearTimeout(timer);
             }
         };
     }, [toast]);
+
     return (
         <div className="mt-2 rounded-xl bg-red pb-1 text-white">
             <div className="flex flex-wrap p-2">
@@ -57,9 +73,9 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
                         <span className="text-14 text-white">   (-{product.discountPercentage}%)</span>
                     </div>
                 </div>
-                <div className="flex-grow ms-16">
+                <div className="ms-16 flex-grow">
                     <span>Kết thúc sau</span>
-                    <div className="my-1 w-full flex h-2  rounded-xl bg-yellow-100 text-center text-10"
+                    <div className="my-1 flex h-2 w-full  rounded-xl bg-yellow-100 text-center text-10"
                         style={{
                             background: `linear-gradient(to right,#faeec0,  #facc15 ${(product.stock / 100) * 100}%, #e5e7eb ${(product.stock / 100) * 100}%)`,
                         }}
@@ -89,7 +105,7 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
                         <li> 1 số điện thoại mua được 2 sản phẩm</li>
                     </div>
                 </div>
-                {!(selectedProvince && selectedDistrict && selectedStreet && selectedWard) ?
+                {!(selectedProvince) ?
                     (<div onClick={() => setIsOpenLocation(true)} className="mx-2 text-softblue">
                         Chọn địa chỉ để bàn giao
                     </div>) :
@@ -161,7 +177,7 @@ export const PricingCard: FC<{ product: Product }> = ({ product }) => {
             <div className="text-black">
                 <Location isOpen={isOpenLocation} onClose={() => setIsOpenLocation(false)} />
             </div>
-            {toast && (<div className="toast absolute top-12 right-1 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
+            {toast && (<div className="toast absolute right-1 top-12 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
                 <div>
                     <i className="view-cart" />
                     <span>Đã thêm vào giỏ hàng</span>

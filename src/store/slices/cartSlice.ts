@@ -1,10 +1,7 @@
-import { Product } from "@components/Product/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { Cart, ProductType } from "@type/index";
 
-interface Cart {
-    products: Product[];
-    counts: number[];
-}
+
 const initialState: Cart = {
     products: [],
     counts: []
@@ -14,7 +11,7 @@ const cartSlice = createSlice({
     name: "cart",
     initialState,
     reducers: {
-        addToCart(state, action: PayloadAction<{ product: Product }>) {
+        addToCart(state, action: PayloadAction<{ product: ProductType }>) {
             const { product } = action.payload;
 
             const index = state.products.findIndex((p) => p.title === product.title);
@@ -26,7 +23,7 @@ const cartSlice = createSlice({
                 state.counts.push(1);
             }
         },
-        removeToCart(state, action: PayloadAction<{ product: Product }>) {
+        removeToCart(state, action: PayloadAction<{ product: ProductType }>) {
             const { product } = action.payload;
 
             const index = state.products.findIndex((p) => p.title === product.title);
@@ -40,7 +37,7 @@ const cartSlice = createSlice({
                 }
             }
         },
-        clearCart(state, action: PayloadAction<{ product: Product }>) {
+        clearCart(state, action: PayloadAction<{ product: ProductType }>) {
             const { product } = action.payload;
 
             const index = state.products.findIndex((p) => p.title === product.title);

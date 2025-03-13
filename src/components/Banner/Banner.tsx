@@ -1,17 +1,15 @@
+import { BannerProps } from "@type/index";
+import classNames from "classnames";
 import React, { FC } from "react";
 import { Box } from "zmp-ui";
-interface BannerProps {
-    src: string;
-    className?: string;
-    containerClassName?: string;
-}
-
 
 export const Banner: FC<BannerProps> = ({ src, className = "", containerClassName = "" }) => {
     return (
-        <Box className={`bg-white ${containerClassName}`}>
-            <div className="flex justify-center">
-                <img src={src} className={className} />
+        <Box className={classNames("bg-white", containerClassName)}>
+            <div className="flex flex-wrap justify-center gap-3">
+                {src.map((image, index) => (
+                    <img key={index} src={image} className={className} alt={`banner-${index}`} />
+                ))}
             </div>
         </Box>
     );

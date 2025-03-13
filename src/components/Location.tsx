@@ -1,18 +1,20 @@
-import { fetchDistrict, fetchProvince, fetchWard, setSelectedDistrict, setSelectedProvince, setSelectedStreet, setSelectedWard } from "@store/locationReducer";
-import { AppDispatch, RootState } from "@store/store";
+import { useAppDispatch } from "@hooks/useAppDispatch";
+import { fetchDistrict, fetchProvince, fetchWard } from "@store/actions/locationAction";
+import {setSelectedDistrict, setSelectedProvince, setSelectedStreet, setSelectedWard } from "@store/slices/locationSlice";
+import { RootState } from "@store/store";
+import { DrawerLocation } from "@type/index";
+import classNames from "classnames";
 import React, { FC, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { Icon } from "zmp-ui";
 
-interface DrawerProps {
-    isOpen: boolean;
-    onClose: () => void;
-}
 
-export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
+export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
     const { provinces, wards, districts, selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
+
     const [tab, setTab] = useState<string>("province");
-    const dispatch = useDispatch<AppDispatch>();
+
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         dispatch(fetchProvince());
@@ -31,9 +33,10 @@ export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
     }, [dispatch, selectedDistrict]);
 
     return (
-        <div className={`fixed right-0 top-0 z-50 h-full w-full bg-white
-                transition-transform duration-300 ease-in-out 
-                ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
+        <div className={classNames(
+            "fixed right-0 top-0 z-50 h-full w-full bg-white transition-transform duration-300 ease-in-out",
+            { "translate-x-0": isOpen, "translate-x-full": !isOpen }
+        )}>
             <div className="flex items-center justify-between bg-white px-2">
                 <div className="p-2.5 pt-6  text-18  font-semibold">Chọn địa chỉ nhận hàng
                 </div>
@@ -87,18 +90,22 @@ export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
                     </div>
                     <div className="flex px-2 text-center">
                         <div onClick={() => setTab("province")}
-                            className={`w-1/3 p-2.5 ${tab === "province" ? "border-b-2 border-navi bg-lightblue font-bold text-navi" : ""}`}>
+                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === "province" })}>
                             <span>Tỉnh/TP</span>
                         </div>
                         <div onClick={() => selectedProvince && setTab("district")}
-                            className={`w-1/3 p-2.5 ${tab === "district" ? "border-b-2 border-navi bg-lightblue font-bold text-navi" : ""}`}>
-                            <span className={`${selectedProvince ? (tab === "district" ? "text-navi" : "text-black") : "text-gray1"}`}>
+                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === "district" })}>
+                            <span className={classNames({ "text-navi": selectedProvince && tab === "district", "text-black": selectedProvince && tab !== "district", "text-gray1": !selectedProvince, })}>
                                 Quận/Huyện
                             </span>
                         </div>
                         <div onClick={() => selectedDistrict && setTab('ward')}
-                            className={`w-1/3 p-2.5 ${tab === "ward" ? "border-b-2 border-navi bg-lightblue font-bold text-navi" : ""}`}>
-                            <span className={`${selectedDistrict ? (tab === "ward" ? "text-navi" : "text-black") : "text-gray1"}`}>
+                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === "ward" })}>
+                            <span className={classNames({
+                                "text-navi": selectedDistrict && tab === "ward",
+                                "text-black": selectedDistrict && tab !== "ward",
+                                "text-gray1": !selectedDistrict,
+                            })}>
                                 Phường/Xã
                             </span>
                         </div>
@@ -106,7 +113,7 @@ export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
                     {tab === "province" ?
                         (<div className="flex h-360 w-full flex-wrap overflow-y-auto text-nowrap p-2 text-14">
                             {provinces.map((province, index) => (
-                                <div className={`w-1/2 border-b p-2.5  ${province === selectedProvince ? "bg-lightblue" : ""}`} key={index}
+                                <div className={classNames("w-1/2 border-b p-2.5", { "bg-lightblue": province === selectedProvince })} key={index}
                                     onClick={() => {
                                         dispatch(setSelectedProvince(province));
 
@@ -122,8 +129,7 @@ export const Location: FC<DrawerProps> = ({ isOpen, onClose }) => {
                         : tab === "district" ?
                             (<div className="flex max-h-[360px] w-full flex-wrap overflow-y-auto p-2 text-14">
                                 {districts.map((district, index) => (
-                                    <div className={`w-1/2 border-b p-2.5
-                                ${district === selectedDistrict ? "bg-lightblue" : ""}`} key={index}
+                                    <div className={classNames("w-1/2 border-b p-2.5", { "bg-lightblue": district === selectedDistrict })} key={index}
                                         onClick={() => {
                                             dispatch(setSelectedDistrict(district));
 

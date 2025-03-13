@@ -1,13 +1,12 @@
 import React from "react";
-import { ReactNode, useState, useRef, useEffect } from "react";
+import { ReactNode, useEffect,useRef, useState } from "react";
+import { DropdownProps } from "src/type/DropdownProps";
 
-interface DropdownProps {
-    button: ReactNode;
-    children: ReactNode;
-}
 
-const Dropdown: React.FC<DropdownProps> = ({ button, children }) => {
+
+export const Dropdown: React.FC<DropdownProps> = ({ button, children }) => {
     const [isOpen, setIsOpen] = useState(false);
+
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     return (
@@ -24,4 +23,3 @@ const Dropdown: React.FC<DropdownProps> = ({ button, children }) => {
     );
 };
 
-export default Dropdown;

@@ -1,11 +1,7 @@
 import { Banner } from "@components/Banner/Banner";
-import Dropdown from "@components/Dropdown/Dropdown";
-import { PricingCard } from "@components/PricingCard";
-import { Assurance } from "@modules/Assurance";
-import { ImageView } from "@modules/ProductImageView";
-import { Review } from "@modules/Review";
-import { Search } from "@modules/Search";
-import { Technical } from "@modules/Technical";
+import { PricingCard } from "@components/index";
+import { Assurance, ImageView, Review, Search, Technical } from "@modules/index";
+import classNames from "classnames";
 import React, { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Icon, Page } from "zmp-ui";
@@ -32,21 +28,21 @@ const DetailPage: React.FunctionComponent = () => {
     return (
         <Page className="overflow-y-auto  bg-white">
             <Banner
-                src="https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/74/f3/74f3c5d044c73bf888d60d1db1307080.gif"
-                className="h-9 w-full"
+                src={["https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/74/f3/74f3c5d044c73bf888d60d1db1307080.gif"]}
+                className="w-full"
                 containerClassName="bg-darkblue justify-center flex" />
             <Search />
             <div className="sticky top-0 z-10 flex h-10 items-center justify-between bg-white px-2    ">
-                <span onClick={() => { handleScroll(imageRef), setNav("image") }} className={`${nav === "image" ? "text-navi" : ""}`}>
+                <span onClick={() => { handleScroll(imageRef), setNav("image") }} className={classNames({ "text-navi": nav === "image" })}>
                     Hình ảnh
                 </span>
-                <span onClick={() => { handleScroll(pricingRef), setNav("pricing") }} className={`${nav === "pricing" ? "text-navi" : ""}`}>
+                <span onClick={() => { handleScroll(pricingRef), setNav("pricing") }} className={classNames({ "text-navi": nav === "pricing" })}>
                     Giá / Khuyến mãi
                 </span>
-                <span onClick={() => { handleScroll(specRef), setNav("spec") }} className={`${nav === "spec" ? "text-navi" : ""}`}>
+                <span onClick={() => { handleScroll(specRef), setNav("spec") }} className={classNames({ "text-navi": nav === "spec" })}>
                     Thông số
                 </span>
-                <span onClick={() => { handleScroll(reviewRef), setNav("review") }} className={`${nav === "review" ? "text-navi" : ""}`}>
+                <span onClick={() => { handleScroll(reviewRef), setNav("review") }} className={classNames({ "text-navi": nav === "review" })}>
                     Đánh giá
                 </span>
             </div>
@@ -64,7 +60,7 @@ const DetailPage: React.FunctionComponent = () => {
                 </div>
             </div>
             <Banner
-                src="https://cdnv2.tgdd.vn/mwg-static/common/Campaign/30/7b/307b722b04fb80641bfcec3e93f24812.jpg"
+                src={["https://cdnv2.tgdd.vn/mwg-static/common/Campaign/30/7b/307b722b04fb80641bfcec3e93f24812.jpg"]}
             />
             <div ref={pricingRef}>
                 <PricingCard product={product} />
@@ -88,10 +84,10 @@ const DetailPage: React.FunctionComponent = () => {
                     </div>
                 </div>
             </div>
-            <div ref={specRef} className="w-full bg-white text-14 border-y-4 border-gray-100">
-                <div className="w-full flex p-3 gap-2 text-center font-bold ">
-                    <div className="w-1/2 p-2 text-navi bg-lightblue rounded-lg border border-navi ">Thông số kỹ thuật</div>
-                    <div className="w-1/2 p-2 border text-blackgray rounded-lg">Bài viết đánh giá</div>
+            <div ref={specRef} className="w-full border-y-4 border-gray-100 bg-white text-14">
+                <div className="flex w-full gap-2 p-3 text-center font-bold ">
+                    <div className="w-1/2 rounded-lg border border-navi bg-lightblue p-2 text-navi ">Thông số kỹ thuật</div>
+                    <div className="w-1/2 rounded-lg border p-2 text-blackgray">Bài viết đánh giá</div>
                 </div>
                 <img src={product.thumbnail} className="mx-auto" />
                 <Technical />
@@ -101,11 +97,11 @@ const DetailPage: React.FunctionComponent = () => {
                 <div className="mb-2.5 text-16 font-bold ">
                     Đánh giá {product.title}
                 </div>
-                <Review  product={product}/>
-                <div className="w-full flex p-3 gap-2 text-center">
-                    <div className="w-1/2 p-2 border border-black text-blackgray rounded-lg">Xem 251 đánh giá</div>
-                    <div className="w-1/2 p-2 text-white bg-navi rounded-lg border border-navi ">Viết đánh giá</div>
-                </div>  
+                <Review product={product} />
+                <div className="flex w-full gap-2 p-3 text-center">
+                    <div className="w-1/2 rounded-lg border border-black p-2 text-blackgray">Xem 251 đánh giá</div>
+                    <div className="w-1/2 rounded-lg border border-navi bg-navi p-2 text-white ">Viết đánh giá</div>
+                </div>
             </div>
         </Page>);
 };

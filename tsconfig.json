@@ -43,6 +43,9 @@
       "@pages/*": ["src/pages/*"],
       "@api/*": ["src/api/*"],
       "@store/*": ["src/store/*"],
+      "@type/*": ["src/type/*"],
+      "@hooks/*": ["src/hooks/*"],
+      "@utilities/*": ["src/utilities/*"],
       "@product/*":["src/components/Product/*"],
       "@mock/*":["mock"]
     }

@@ -1,15 +1,13 @@
-import { MenuItem } from "@components/Menu/itemMenu";
+import { MenuItem } from "@components/index";
+import { DrawerMenu } from "@type/index";
 import React, { FC, useState } from "react";
 
 import categories from "../../mock/categories.json"
-interface DrawerProps {
-    isOpen: boolean;
-    onClose: () => void;
-}
+
 
 const names = ["Chương trình hot", "Điện tử, điện máy", "Điện gia dung", "Điện tử viễn thông", "Phụ kiện", "Máy cũ, trưng bày", "Sản phấm khác", "Thông tin", "Dịch vụ tiện ích"]
 
-export const Menu: FC<DrawerProps> = ({ isOpen, onClose }) => {
+export const Menu: FC<DrawerMenu> = ({ isOpen, onClose }) => {
     const [selected, setSelected] = useState(names[0]);
 
     return (

@@ -1,18 +1,16 @@
-import api from "@api/apiLocation";
-import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { District, Province, Ward } from "@type/index";
 
-interface Province {
-    name: string;
-    id: string;
-}
-interface District {
-    name: string;
-    id: string;
-}
-interface Ward {
-    name: string;
-    id: string;
-}
+import {
+    fetchDistrict,
+    fetchDistrictFailure,
+    fetchDistrictSuccess,
+    fetchProvince,
+    fetchProvinceFailure,
+    fetchProvinceSuccess,
+    fetchWard,
+    fetchWardFailure,
+    fetchWardSuccess} from "../actions/locationAction";
 
 interface AddressState {
     provinces: Province[];
@@ -54,45 +52,6 @@ const initialState: AddressState = {
     },
 };
 
-export const fetchProvince = createAsyncThunk(
-    "location/province",
-    async (_, { rejectWithValue }) => {
-        try {
-            const response = await api.get("/provinces?pages=0&size=63");
-
-            return response.data.data;
-        }
-        catch (error: unknown) {
-            return rejectWithValue("Lỗi khi lấy danh sách tỉnh")
-        }
-    }
-);
-export const fetchDistrict = createAsyncThunk(
-    "location/district",
-    async (province: Province, { rejectWithValue }) => {
-        try {
-            const response = await api.get(`/districts/${province.id}?pages=0&size=100`);
-
-            return response.data.data;
-        }
-        catch (error: unknown) {
-            return rejectWithValue("Lỗi khi lấy danh sách huyện")
-        }
-    }
-);
-export const fetchWard = createAsyncThunk(
-    "location/wards",
-    async (district: District, { rejectWithValue }) => {
-        try {
-            const response = await api.get(`/wards/${district.id}?pages=0&size=100`);
-
-            return response.data.data;
-        }
-        catch (error: unknown) {
-            return rejectWithValue("Lỗi khi lấy danh sách phường")
-        }
-    }
-);
 const locationSlice = createSlice({
     name: "location",
     initialState,
@@ -123,61 +82,61 @@ const locationSlice = createSlice({
         },
     },
     extraReducers: (builder) => {
-        builder.addCase(fetchProvince.pending, (state) => {
+        builder.addCase(fetchProvince, (state) => {
             state.loading.provinces = true;
 
             state.error.provinces = null;
         });
 
-        builder.addCase(fetchProvince.fulfilled, (state, action: PayloadAction<Province[]>) => {
+        builder.addCase(fetchProvinceSuccess, (state, action: PayloadAction<Province[]>) => {
             state.loading.provinces = false;
 
             state.provinces = action.payload;
         });
 
-        builder.addCase(fetchProvince.rejected, (state, action) => {
+        builder.addCase(fetchProvinceFailure, (state, action) => {
             state.loading.provinces = false;
 
             state.error.provinces = action.payload as string;
         });
 
-        builder.addCase(fetchDistrict.pending, (state) => {
+        builder.addCase(fetchDistrict, (state) => {
             state.loading.districts = true;
 
             state.error.districts = null;
         });
 
-        builder.addCase(fetchDistrict.fulfilled, (state, action: PayloadAction<District[]>) => {
+        builder.addCase(fetchDistrictSuccess, (state, action: PayloadAction<District[]>) => {
             state.districts = action.payload;
 
             state.loading.districts = false;
         });
 
-        builder.addCase(fetchDistrict.rejected, (state, action) => {
+        builder.addCase(fetchDistrictFailure, (state, action) => {
             state.loading.districts = false;
 
             state.error.districts = action.payload as string;
         });
 
-        builder.addCase(fetchWard.pending, (state) => {
+        builder.addCase(fetchWard, (state) => {
             state.loading.wards = true;
 
             state.error.wards = null;
         });
 
-        builder.addCase(fetchWard.fulfilled, (state, action: PayloadAction<Ward[]>) => {
+        builder.addCase(fetchWardSuccess, (state, action: PayloadAction<Ward[]>) => {
             state.loading.wards = false;
 
             state.wards = action.payload;
-        })
+        });
 
-        builder.addCase(fetchWard.rejected, (state, action) => {
+        builder.addCase(fetchWardFailure, (state, action) => {
             state.loading.wards = false;
 
             state.error.wards = action.payload as string;
-        })
-    }
-})
+        });
+    },
+});
 
-export const { setSelectedProvince, setSelectedDistrict, setSelectedWard,setSelectedStreet } = locationSlice.actions;
+export const { setSelectedProvince, setSelectedDistrict, setSelectedWard, setSelectedStreet } = locationSlice.actions;
 export default locationSlice.reducer;

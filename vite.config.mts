@@ -15,7 +15,10 @@ export default () => {
         "@modules":path.resolve(__dirname, "src/modules"),
         "@pages": path.resolve(__dirname, "src/pages"),
         "@api": path.resolve(__dirname, "src/api"),
+        "@type": path.resolve(__dirname, "src/type"),
         "@store": path.resolve(__dirname, "src/store"),
+        "@hooks": path.resolve(__dirname, "src/hooks"),
+        "@utilities": path.resolve(__dirname, "src/utilities"),
         "@product": path.resolve(__dirname, "src/components/product"),
         "@mock": path.resolve(__dirname, "mock"),
       }

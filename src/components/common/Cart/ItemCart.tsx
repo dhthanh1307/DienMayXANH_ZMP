@@ -1,11 +1,10 @@
-import { Product } from "@components/Product/type";
-import { addToCart, clearCart, removeToCart } from "@store/cartReducer";
-import { AppDispatch } from "@store/store";
+import { useAppDispatch } from "@hooks/useAppDispatch";
+import { addToCart, clearCart, removeToCart } from "@store/slices/cartSlice";
+import { ProductType } from "@type/index";
 import React, { FC } from "react";
-import { useDispatch } from "react-redux";
 
-export const CartItem: FC<{ product: Product, count: number }> = ({ product, count }) => {
-    const dispatch = useDispatch<AppDispatch>();
+export const CartItem: FC<{ product: ProductType, count: number }> = ({ product, count }) => {
+    const dispatch = useAppDispatch();
 
     return (
         <div className="flex p-2.5 text-12">
@@ -24,7 +23,7 @@ export const CartItem: FC<{ product: Product, count: number }> = ({ product, cou
                     <span className="rounded-md bg-softgray p-2"> Màu trắng</span>
                 </div>
                 <div className="dropdown">
-                    <div tabIndex={0} role="button" className="mt-2 w-fit bg-lightblue px-1 py-0.5 text-navi rounded-sm">
+                    <div tabIndex={0} role="button" className="mt-2 w-fit rounded-sm bg-lightblue px-1 py-0.5 text-navi">
                         <i className="product-label-flashsale" /> Flashsale kết thúc sau
                     </div>
                     <div tabIndex={0} className="dropdown-content mt-1 w-270 rounded-md bg-softgray p-2 text-12 text-gray-500">

@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-export const Discount: FC = () => {
+export const DiscountSwiper: FC = () => {
     return (
         <div className="flex h-12 items-center gap-2 overflow-x-auto bg-white">
             {[

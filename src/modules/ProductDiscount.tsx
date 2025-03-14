@@ -3,7 +3,7 @@ import { fetchProducts } from "@store/actions/productAction";
 import { addToCart } from "@store/slices/cartSlice";
 import { AppDispatch, RootState } from "@store/store";
 import { ProductType } from "@type/index";
-import { productReselector } from "@utilities/productReselector";
+import { productReselector } from "@store/productReselector";
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";

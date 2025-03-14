@@ -9,3 +9,4 @@ export {DropdownProps} from "./DropdownProps";
 export {ProductType} from "./ProductType";
 export {Province} from "./Province";
 export {Ward} from "./Ward";
+export * from "./InputProps"

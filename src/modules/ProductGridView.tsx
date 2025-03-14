@@ -2,7 +2,7 @@ import { ProductItem, ShowMore } from "@components/index";
 import { useAppDispatch } from "@hooks/useAppDispatch";
 import { fetchProductCategory } from "@store/actions/productAction";
 import {  RootState } from "@store/store";
-import { categoryReselector } from "@utilities/productReselector";
+import { categoryReselector } from "@store/productReselector";
 import React, { FC, useEffect, useMemo } from "react";
 import {  useSelector } from "react-redux";
 

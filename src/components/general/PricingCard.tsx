@@ -22,7 +22,6 @@ export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
     const handleAddToCart = async (product: ProductType) => {
         if (!selectedProvince) {
             setIsOpenLocation(true);
-
             setToast(true);
         }
 

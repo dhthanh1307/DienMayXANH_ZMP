@@ -6,3 +6,4 @@ export {Dropdown} from "./Dropdown/Dropdown";
 export {ItemAssurance} from "../ItemAssurance";
 export {PricingCard} from "./PricingCard";
 export * from "./ShowMoreButton";
+export * from "./input"

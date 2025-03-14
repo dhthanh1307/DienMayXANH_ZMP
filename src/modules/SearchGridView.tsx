@@ -1,7 +1,7 @@
 import { ProductItem, ShowMore } from "@components/index";
 import { fetchSearchProducts } from "@store/actions/productAction";
 import { AppDispatch, RootState } from "@store/store";
-import { searchProductReselector } from "@utilities/productReselector";
+import { searchProductReselector } from "@store/productReselector";
 import React, { FC, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "zmp-ui";

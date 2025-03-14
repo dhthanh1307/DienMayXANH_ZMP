@@ -1,6 +1,6 @@
 import { Search } from "@modules/index";
 import { RootState } from "@store/store";
-import { cartReselector } from "@utilities/cartReselector";
+import { cartReselector } from "@store/cartReselector";
 import React, { } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +14,7 @@ const PaymentPage: React.FunctionComponent = () => {
     const navigate = useNavigate();
 
     const total=useSelector(cartReselector)
-
+    const {userGener,userName,userPhone}=useSelector((state:RootState)=>state.information)
     return (
         <Page className="overflow-y-auto">
             <Search />
@@ -25,7 +25,7 @@ const PaymentPage: React.FunctionComponent = () => {
 
             <div className="w-full bg-white p-5">
                 <div>
-                    Cảm ơn anh <span className="font-bold">Nguyễn Văn A</span> đã cho điện máy XANH cơ hội phục vụ.
+                    Cảm ơn {userGener} <span className="font-bold">{userName}</span> đã cho điện máy XANH cơ hội phục vụ.
                 </div>
                 <div className=" mt-3 bg-lightgray p-2.5">
                     <div className="flex justify-between">
@@ -38,7 +38,7 @@ const PaymentPage: React.FunctionComponent = () => {
 
                     <li>
                         <span className="font-bold">Người nhận hàng:</span>
-                        <span>Anh Nguyễn Văn A, 0967066872</span>
+                        <span>{userGener} {userName}, {userPhone}</span>
                     </li>
                     <li>
                         <span className="font-bold">Giao đến:</span>

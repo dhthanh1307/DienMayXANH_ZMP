@@ -235,3 +235,37 @@
     background-size: 302px 152px;
     background-position: -190px -14px;
 }
+.receive-at-store__error--icon {
+    background-image: url(	https://cdn.tgdd.vn/mwgcart/v2/vue-pro/img/cart_common_sprite.67878209ac0c8229388208e3b.png);
+    width: 20px;
+    height: 20px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 602px 553px;
+    background-position: -235px -327px;
+}
+.iconcart-label-giaotannoi {
+    background-image: url(https://cdn.tgdd.vn/mwgcart/v2/vue-pro/img/cart_common_sprite.67878209ac0c8229388208e3b.png);
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 602px 553px;
+    background-position: -62px -456px;
+}
+.iconcart-label-nhantaisieuthi {
+    background-image: url(https://cdn.tgdd.vn/mwgcart/v2/vue-pro/img/cart_common_sprite.67878209ac0c8229388208e3b.png);
+    width: 16px;
+    height: 16px;
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 602px 553px;
+    background-position: -92px -456px;
+}
+

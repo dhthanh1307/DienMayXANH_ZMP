@@ -38,6 +38,7 @@ module.exports = {
       },
       width: {
         54: "54px",
+        60:"60px",
         70: "70px",
         80: "80px",
         90: "90px",
@@ -78,8 +79,5 @@ module.exports = {
       }
     },
   },
-  plugins: [require("daisyui")],
-  daisyui: {
-    themes: ["light", "dark"],
-  },
+
 };

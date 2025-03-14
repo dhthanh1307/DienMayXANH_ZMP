@@ -1,5 +1,5 @@
 import { ProductItem } from "@components/index";
-import { categoryReselector } from "@utilities/productReselector";
+import { categoryReselector } from "@store/productReselector";
 import React, { FC, useEffect } from "react";
 import {  useSelector } from "react-redux";
 

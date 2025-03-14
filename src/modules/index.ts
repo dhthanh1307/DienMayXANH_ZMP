@@ -8,3 +8,4 @@ export {Review} from "./Review";
 export {Search} from "./Search";
 export {SearchView} from "./SearchGridView";
 export {Technical} from "./Technical";
+export {Infomation} from "./Infomation";

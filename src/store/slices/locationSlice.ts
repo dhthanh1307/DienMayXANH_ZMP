@@ -19,7 +19,7 @@ interface AddressState {
     selectedProvince: Province | null;
     selectedDistrict: District | null;
     selectedWard: Ward | null;
-    selectedStreet: string | null;
+    selectedStreet: string ;
     loading: {
         provinces: boolean;
         districts: boolean;
@@ -36,7 +36,7 @@ const initialState: AddressState = {
     provinces: [],
     districts: [],
     wards: [],
-    selectedStreet: null,
+    selectedStreet: '',
     selectedProvince: null,
     selectedDistrict: null,
     selectedWard: null,
@@ -77,7 +77,7 @@ const locationSlice = createSlice({
         setSelectedWard(state, action: PayloadAction<Ward | null>) {
             state.selectedWard = action.payload;
         },
-        setSelectedStreet(state, action: PayloadAction<string | null>) {
+        setSelectedStreet(state, action: PayloadAction<string >) {
             state.selectedStreet = action.payload;
         },
     },

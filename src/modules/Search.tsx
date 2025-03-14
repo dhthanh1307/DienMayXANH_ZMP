@@ -3,7 +3,7 @@ import "../css/icon.css";
 import { Location, Menu } from "@components/index";
 import { RootState } from "@store/store";
 import { ProductType } from "@type/ProductType";
-import { categoryReselector } from "@utilities/productReselector";
+import { categoryReselector } from "@store/productReselector";
 import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -93,15 +93,34 @@ export const Search: FC = () => {
                     <i className="iconnewglobal-blackcart" />
                 </div>
                 {isFocused && filteredProducts.length > 0 && (
-                    <div className=" w-full h-180 overflow-y-auto absolute top-10 ">
+                    <div className=" w-full h-450 overflow-y-auto absolute top-10 ">
                         <div className="mx-2.5   rounded-lg ">
-                            <div className="w-full rounded-tl-lg rounded-tr-lg p-2.5 bg-lightgray">
+                            <div className="w-full rounded-tl-lg rounded-tr-lg text-13 text-blackgray py-1 px-2.5 bg-lightgray">
                                 Có phải bạn muốn tìm
                             </div>
-                            <div className="bg-white w-full ">
-                                {filteredProducts.map((product) => (
-                                    <div key={product.title} className="px-2.5 ">
-                                        {product.title}
+                            <div className="bg-white w-full text-12 text-navi">
+                                {filteredProducts.slice(0, 5).map((product, index) => (
+                                    <div key={index} className="ms-1 p-2.5 border-b">
+                                        <span className="">{product.title}</span>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="w-full text-13 text-blackgray py-1 px-2.5 bg-lightgray">
+                                Sản phẩm gợi ý
+                            </div>
+                            <div className="bg-white w-full text-12 ">
+                                {filteredProducts.slice(0, 5).map((product, index) => (
+                                    <div onClick={()=> navigate("/detail", { state: { product } })} key={index} className="ms-1 p-2.5 border-b flex">
+                                        <img src={product.thumbnail} className="w-60" />
+                                        <div>
+                                            <div className="text-14">{product.title}</div>
+                                            <div className="font-bold text-orange">Online giá quá rẻ</div>
+                                            <div className="flex gap-1">
+                                                <span className="text-red text-14 font-bold">{(product.price * (100 - product.discountPercentage) / 100).toLocaleString("vi-VN")} $</span>
+                                                <del>{product.price.toLocaleString("vi-VN")}$</del>
+                                                <span>{product.discountPercentage}%</span>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>

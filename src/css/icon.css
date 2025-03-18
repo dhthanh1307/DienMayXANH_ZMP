@@ -268,4 +268,16 @@
     background-size: 602px 553px;
     background-position: -92px -456px;
 }
-
+[class^="iconoh-"], [class*="iconoh-"] {
+    background-image: url(https://cdn.tgdd.vn/mwgcart/orderhistory/images/2022/icons@2022.png);
+    background-repeat: no-repeat;
+    display: inline-block;
+    line-height: 30px;
+    vertical-align: middle;
+    background-size: 490px 224px;
+}
+.iconoh-phone-blue {
+    background-position: -66px -19px;
+    width: 14px;
+    height: 21px;
+}

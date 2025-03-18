@@ -66,7 +66,7 @@ export const Review: FC<{ product: ProductType }> = ({ product }) => {
                     <i className="iconcmt-starbuy" />
                     <i className="iconcmt-starbuy" />
                     <i className="iconcmt-starbuy" />
-                    <div className="ms-2 border-s ps-2 flex gap-1 items-center">
+                    <div className="ms-2 flex items-center gap-1 border-s ps-2">
                         <i className="iconcmt-heart" />
                         Sẽ giới thiệu cho bạn bè, người thân
                     </div>

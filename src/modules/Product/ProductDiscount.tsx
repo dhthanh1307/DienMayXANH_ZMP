@@ -1,9 +1,10 @@
 import { Location, ShowMore } from "@components/index";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { fetchProducts } from "@store/actions/productAction";
+import { productReselector } from "@store/reselector/productReselector";
 import { addToCart } from "@store/slices/cartSlice";
-import { AppDispatch, RootState } from "@store/store";
+import { AppDispatch } from "@store/store";
 import { ProductType } from "@type/index";
-import { productReselector } from "@store/productReselector";
 import React, { FC, useEffect, useMemo, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -15,9 +16,9 @@ export const ProductDiscount: FC = () => {
 
     const products = useSelector(productReselector);
 
-    const showAll = useSelector((state: RootState) => state.showmore.showMoreById["productDiscount"] ?? false);
+    const showAll = useAppSelector(state => state.showmore.showMoreById["productDiscount"] ?? false);
 
-    const {selectedProvince } = useSelector((state: RootState) => state.location);
+    const {selectedProvince } = useAppSelector(state=> state.location);
 
     const [isOpenLocation, setIsOpenLocation] = useState(false);
 
@@ -30,9 +31,12 @@ export const ProductDiscount: FC = () => {
     const handleAddToCart = async (product: ProductType) => {
         if (!selectedProvince) {
             setIsOpenLocation(true);
+
             setToast(true);
         }
+
         await dispatch(addToCart({ product }));
+
         setToast(true);
     }
 
@@ -41,6 +45,7 @@ export const ProductDiscount: FC = () => {
         if (toast) {
             timer = setTimeout(() => setToast(false), 3000);
         }
+
         return () => {
             if (timer) {
                 clearTimeout(timer);
@@ -90,6 +95,7 @@ export const ProductDiscount: FC = () => {
                             </div>
                             <div onClick={(e) => {
                                 e.stopPropagation();
+
                                 handleAddToCart(promotion)
                             }} className="my-3 h-8 rounded-md bg-lightblue px-2 py-1 text-center font-bold text-navi">
                                 Mua ngay

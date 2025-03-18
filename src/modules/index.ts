@@ -1,11 +1,11 @@
+export {Search} from "../components/Search";
 export {Assurance} from "./Assurance";
+export {Infomation} from "./Infomation";
 export * from "./Menu"
-export {ProductDiscount} from"./ProductDiscount";
-export {Recommend} from "./ProductGridView";
-export {ImageView} from "./ProductImageView";
-export {ListView} from "./ProductScrollView";
+export {ProductDiscount} from"./Product/ProductDiscount";
+export {Recommend} from "./Product/ProductGridView";
+export {ImageView} from "./Product/ProductImageView";
+export {ListView} from "./Product/ProductScrollView";
 export {Review} from "./Review";
-export {Search} from "./Search";
 export {SearchView} from "./SearchGridView";
 export {Technical} from "./Technical";
-export {Infomation} from "./Infomation";

@@ -1,9 +1,9 @@
 import { Banner } from "@components/Banner/Banner";
-import { Carousel, Categories, DiscountSwiper } from "@components/index";
+import { Categories, DiscountSwiper,EmblaCarousel } from "@components/index";
 import { ListView, ProductDiscount, Recommend, Search } from "@modules/index";
 import React, { } from "react";
 import { Box, Page } from "zmp-ui";
-const HomePage: React.FunctionComponent = () => {
+export const HomePage: React.FunctionComponent = () => {
   // const navigate = useNavigate();
   return (
     <Page className="overflow-y-auto">
@@ -22,7 +22,7 @@ const HomePage: React.FunctionComponent = () => {
         className="rounded-lg p-2" />
       <DiscountSwiper />
       <ProductDiscount />
-      <Carousel />
+      <EmblaCarousel />
       <div className="bg-white p-3 text-18 font-bold ">Gợi ý cho bạn</div>
       <Recommend />
       <div className="mt-4 bg-white p-3 text-18 font-bold"> Sản phẩm đặc quyền</div>
@@ -46,7 +46,7 @@ const HomePage: React.FunctionComponent = () => {
               "https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/69/20/6920d9a80dfc8a98ec8000c4403363e8.png",
               "https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/e2/51/e2513636ff682b4da055b117e2dcb10d.png",
               "https://cdnv2.tgdd.vn/mwg-static/dmx/Banner/3f/95/3f95a2fbf065c3e595a86a0dc938f878.png"
-            ]} className="w-44"/>
+            ]} className="w-[45vw]"/>
       </div>
     </Page>
   );

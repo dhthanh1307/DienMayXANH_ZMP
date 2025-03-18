@@ -10,6 +10,7 @@ const initialState: Info = {
     userPhone: '',
 
 }
+
 const informationSlice = createSlice({
     name: "info",
     initialState,

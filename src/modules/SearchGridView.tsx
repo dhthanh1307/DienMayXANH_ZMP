@@ -1,12 +1,13 @@
 import { ProductItem, ShowMore } from "@components/index";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { fetchSearchProducts } from "@store/actions/productAction";
-import { AppDispatch, RootState } from "@store/store";
-import { searchProductReselector } from "@store/productReselector";
+import { searchProductReselector } from "@store/reselector/productReselector";
+import { AppDispatch } from "@store/store";
 import React, { FC, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box } from "zmp-ui";
 export const SearchView: FC<{ keyword: string }> = ({ keyword }) => {
-    const showAll = useSelector((state: RootState) => state.showmore.showMoreById["searchGridView"] ?? false);
+    const showAll = useAppSelector(state => state.showmore.showMoreById["searchGridView"] ?? false);
 
     const products = useSelector(searchProductReselector);
 

@@ -1,12 +1,10 @@
 import { Location } from "@components/Location";
 import { useAppDispatch } from "@hooks/useAppDispatch";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { addToCart } from "@store/slices/cartSlice";
-import { RootState } from "@store/store";
 import { ProductType } from "@type/index";
 import React, { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { min } from "rxjs";
 
 export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
     const [isOpenLocation, setIsOpenLocation] = useState(false);
@@ -15,13 +13,14 @@ export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
 
     const dispatch = useAppDispatch();
 
-    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
+    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useAppSelector(state => state.location);
 
     const [toast, setToast] = useState(false);
 
     const handleAddToCart = async (product: ProductType) => {
         if (!selectedProvince) {
             setIsOpenLocation(true);
+
             setToast(true);
         }
 

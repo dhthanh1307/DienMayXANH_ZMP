@@ -6,7 +6,7 @@ export {District} from "./District";
 export {DrawerLocation} from "./DrawerLocation";
 export {DrawerMenu} from "./DrawerMenu";
 export {DropdownProps} from "./DropdownProps";
+export * from "./InputProps"
 export {ProductType} from "./ProductType";
 export {Province} from "./Province";
 export {Ward} from "./Ward";
-export * from "./InputProps"

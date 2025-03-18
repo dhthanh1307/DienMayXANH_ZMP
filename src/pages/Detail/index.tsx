@@ -6,7 +6,7 @@ import React, { useRef, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Icon, Page } from "zmp-ui";
 
-const DetailPage: React.FunctionComponent = () => {
+export const DetailPage: React.FunctionComponent = () => {
     const location = useLocation();
 
     const product = location.state.product;

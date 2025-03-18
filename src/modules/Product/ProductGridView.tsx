@@ -1,13 +1,14 @@
 import { ProductItem, ShowMore } from "@components/index";
 import { useAppDispatch } from "@hooks/useAppDispatch";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { fetchProductCategory } from "@store/actions/productAction";
-import {  RootState } from "@store/store";
-import { categoryReselector } from "@store/productReselector";
+import { categoryReselector } from "@store/reselector/productReselector";
+import {   } from "@store/store";
 import React, { FC, useEffect, useMemo } from "react";
 import {  useSelector } from "react-redux";
 
 export const Recommend: FC = () => {
-    const showAll = useSelector((state: RootState) => state.showmore.showMoreById["productGridView"] ?? false);
+    const showAll = useAppSelector(state => state.showmore.showMoreById["productGridView"] ?? false);
 
     const products = useSelector(categoryReselector);
 

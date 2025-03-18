@@ -1,4 +1,4 @@
-import { MenuItem } from "@components/index";
+import { Drawer, MenuItem } from "@components/index";
 import { DrawerMenu } from "@type/index";
 import React, { FC, useState } from "react";
 
@@ -11,14 +11,7 @@ export const Menu: FC<DrawerMenu> = ({ isOpen, onClose }) => {
     const [selected, setSelected] = useState(names[0]);
 
     return (
-        <div className={`fixed right-0 top-0 z-50 h-full w-full  bg-softgray
-                transition-transform duration-300 ease-in-out 
-                ${isOpen ? "translate-x-0" : "translate-x-full"}`}>
-            <div className="flex items-center justify-between bg-white px-2">
-                <span className="p-2.5 text-14 font-bold">Danh mục sản phẩm
-                </span>
-                <img onClick={() => onClose()} className="size-4" src="https://cdn-icons-png.flaticon.com/512/106/106830.png" />
-            </div>
+        <Drawer isOpen={isOpen} onClose={onClose} title="Danh mục sản phẩm">
             <div className="mt-2 flex h-full w-full ">
                 <div className="max-h-full w-100 items-center justify-center gap-1 bg-lightgray">
                     {names.map((name, index) => (
@@ -30,9 +23,9 @@ export const Menu: FC<DrawerMenu> = ({ isOpen, onClose }) => {
                     )
                     )}
                 </div>
-                <div className="ms-3 flex h-500 flex-wrap justify-center bg-white p-2">
-                    <div className="w-full text-14 font-bold uppercase">{selected}</div>
-                    <div className="flex h-450 w-full flex-wrap overflow-y-auto">
+                <div className="ms-3 flex h-full flex-wrap justify-center bg-white p-2">
+                    <div className="h-fit w-full text-14 font-bold uppercase">{selected}</div>
+                    <div className="flex h-full w-full flex-wrap overflow-y-auto">
                         {categories.map((category, index) => (
                             <MenuItem category={category} key={index}/>
                         ))
@@ -40,6 +33,6 @@ export const Menu: FC<DrawerMenu> = ({ isOpen, onClose }) => {
                     </div>
                 </div>
             </div>
-        </div>
+        </Drawer>
     );
 };

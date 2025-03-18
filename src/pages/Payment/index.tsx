@@ -1,20 +1,22 @@
+import { useAppSelector } from "@hooks/useAppSelector";
 import { Search } from "@modules/index";
-import { RootState } from "@store/store";
-import { cartReselector } from "@store/cartReselector";
+import { cartReselector } from "@store/reselector/cartReselector";
 import React, { } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Page } from "zmp-ui";
 
-const PaymentPage: React.FunctionComponent = () => {
-    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location)
+export const PaymentPage: React.FunctionComponent = () => {
+    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useAppSelector(state=> state.location)
 
-    const { products, counts } = useSelector((state: RootState) => state.cart)
+    const { products, counts } = useAppSelector(state=> state.cart)
 
     const navigate = useNavigate();
 
     const total=useSelector(cartReselector)
-    const {userGener,userName,userPhone}=useSelector((state:RootState)=>state.information)
+
+    const {userGener,userName,userPhone}=useAppSelector(state=>state.information)
+
     return (
         <Page className="overflow-y-auto">
             <Search />

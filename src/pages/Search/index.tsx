@@ -4,7 +4,7 @@ import React, { } from "react";
 import { useLocation } from "react-router-dom";
 import { Page } from "zmp-ui";
 
-const SearchPage: React.FunctionComponent = () => {
+export const SearchPage: React.FunctionComponent = () => {
     const location = useLocation();
 
     const keyword = location.state?.keyword;

@@ -1,18 +1,20 @@
 import { useAppDispatch } from "@hooks/useAppDispatch";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { fetchDistrict, fetchProvince, fetchWard } from "@store/actions/locationAction";
-import {setSelectedDistrict, setSelectedProvince, setSelectedStreet, setSelectedWard } from "@store/slices/locationSlice";
-import { RootState } from "@store/store";
+import { setSelectedDistrict, setSelectedProvince, setSelectedStreet, setSelectedWard } from "@store/slices/locationSlice";
 import { DrawerLocation } from "@type/index";
+import { TabLocation } from "@utilities/enum/enum";
 import classNames from "classnames";
 import React, { FC, useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { Icon } from "zmp-ui";
+
+import { Drawer } from "./general";
 
 
 export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
-    const { provinces, wards, districts, selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location);
+    const { provinces, wards, districts, selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useAppSelector(state => state.location);
 
-    const [tab, setTab] = useState<string>("province");
+    const [tab, setTab] = useState<string>(TabLocation.Province);
 
     const dispatch = useAppDispatch();
 
@@ -33,16 +35,7 @@ export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
     }, [dispatch, selectedDistrict]);
 
     return (
-        <div className={classNames(
-            "fixed right-0 top-0 z-50 h-full w-full bg-white transition-transform duration-300 ease-in-out",
-            { "translate-x-0": isOpen, "translate-x-full": !isOpen }
-        )}>
-            <div className="flex items-center justify-between bg-white px-2">
-                <div className="p-2.5 pt-6  text-18  font-semibold">Chọn địa chỉ nhận hàng
-                </div>
-                <img onClick={() => onClose()} className="size-4" src="https://cdn-icons-png.flaticon.com/512/106/106830.png" />
-            </div>
-            <hr />
+        <Drawer isOpen={isOpen} onClose={onClose} title="Chọn địa chỉ nhận hàng">
             <div className="m-2.5 ps-2">
                 <span className="text-gray-400">Địa chỉ được chọn: </span>
                 <span>
@@ -55,7 +48,7 @@ export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
                         .filter(Boolean)
                         .join(', ')}
                 </span>
-                {tab === "finish" && (<span onClick={() => setTab("province")} className="text-navi"> Thay đổi</span>)}
+                {tab === "finish" && (<span onClick={() => setTab(TabLocation.Province)} className="text-navi"> Thay đổi</span>)}
             </div>
             {tab === "finish" ?
                 (<div className="m-2.5 bg-white ">
@@ -89,28 +82,28 @@ export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
                         <hr className="w-32" />
                     </div>
                     <div className="flex px-2 text-center">
-                        <div onClick={() => setTab("province")}
-                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === "province" })}>
+                        <div onClick={() => setTab(TabLocation.Province)}
+                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === TabLocation.Province })}>
                             <span>Tỉnh/TP</span>
                         </div>
-                        <div onClick={() => selectedProvince && setTab("district")}
-                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === "district" })}>
-                            <span className={classNames({ "text-navi": selectedProvince && tab === "district", "text-black": selectedProvince && tab !== "district", "text-gray1": !selectedProvince, })}>
+                        <div onClick={() => selectedProvince && setTab(TabLocation.District)}
+                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === TabLocation.District })}>
+                            <span className={classNames({ "text-navi": selectedProvince && tab === TabLocation.District, "text-black": selectedProvince && tab !== TabLocation.District, "text-gray1": !selectedProvince, })}>
                                 Quận/Huyện
                             </span>
                         </div>
                         <div onClick={() => selectedDistrict && setTab('ward')}
-                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === "ward" })}>
+                            className={classNames("w-1/3 p-2.5", { "border-b-2 border-navi bg-lightblue font-bold text-navi": tab === TabLocation.Ward })}>
                             <span className={classNames({
-                                "text-navi": selectedDistrict && tab === "ward",
-                                "text-black": selectedDistrict && tab !== "ward",
+                                "text-navi": selectedDistrict && tab === TabLocation.Ward,
+                                "text-black": selectedDistrict && tab !== TabLocation.Ward  ,
                                 "text-gray1": !selectedDistrict,
                             })}>
                                 Phường/Xã
                             </span>
                         </div>
                     </div>
-                    {tab === "province" ?
+                    {tab === TabLocation.Province ?
                         (<div className="flex h-360 w-full flex-wrap overflow-y-auto text-nowrap p-2 text-14">
                             {provinces.map((province, index) => (
                                 <div className={classNames("w-1/2 border-b p-2.5", { "bg-lightblue": province === selectedProvince })} key={index}
@@ -119,14 +112,14 @@ export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
 
                                         dispatch(fetchDistrict(province))
 
-                                        setTab("district");
+                                        setTab(TabLocation.District);
                                     }
                                     }>
                                     {province.name}
                                 </div>
                             ))}
                         </div>)
-                        : tab === "district" ?
+                        : tab === TabLocation.District ?
                             (<div className="flex max-h-[360px] w-full flex-wrap overflow-y-auto p-2 text-14">
                                 {districts.map((district, index) => (
                                     <div className={classNames("w-1/2 border-b p-2.5", { "bg-lightblue": district === selectedDistrict })} key={index}
@@ -135,13 +128,13 @@ export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
 
                                             dispatch(fetchWard(district));
 
-                                            setTab("ward");
+                                            setTab(TabLocation.Ward);
                                         }}>
                                         {district.name}
                                     </div>
                                 ))}
                             </div>)
-                            : tab === "ward" &&
+                            : tab === TabLocation.Ward &&
                             (<div className="flex w-full flex-wrap overflow-y-auto p-2 text-14 ">
                                 {wards.map((ward, index) => (
                                     <div className="w-1/2 border-b p-2.5" key={index} onClick={() => {
@@ -155,10 +148,6 @@ export const Location: FC<DrawerLocation> = ({ isOpen, onClose }) => {
                             </div>)
                     }
                 </div>)}
-
-
-
-
-        </div>
+        </Drawer>
     )
 }

@@ -1,12 +1,11 @@
 import { useAppDispatch } from "@hooks/useAppDispatch";
+import { useAppSelector } from "@hooks/useAppSelector";
 import { setShowAll } from "@store/slices/showmoreSlice";
-import { RootState } from "@store/store";
 import React from "react";
-import { useSelector } from "react-redux";
 import { Icon } from "zmp-ui";
 
 export const ShowMore: React.FC<{ id: string }> = ({ id }) => {
-    const showAll = useSelector((state: RootState) => state.showmore.showMoreById[id] ?? false);
+    const showAll = useAppSelector(state => state.showmore.showMoreById[id] ?? false);
 
     const dispatch = useAppDispatch();
 

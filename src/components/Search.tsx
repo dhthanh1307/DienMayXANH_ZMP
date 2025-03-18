@@ -1,9 +1,9 @@
 import "../css/icon.css";
 
 import { Location, Menu } from "@components/index";
-import { RootState } from "@store/store";
+import { useAppSelector } from "@hooks/useAppSelector";
+import { categoryReselector } from "@store/reselector/productReselector";
 import { ProductType } from "@type/ProductType";
-import { categoryReselector } from "@store/productReselector";
 import React, { FC, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -18,14 +18,18 @@ export const Search: FC = () => {
 
     const [isOpenLocation, setIsOpenLocation] = useState(false);
 
-    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useSelector((state: RootState) => state.location)
+    const { selectedDistrict, selectedProvince, selectedWard, selectedStreet } = useAppSelector(state => state.location)
 
-    const { counts } = useSelector((state: RootState) => state.cart);
+    const { counts } = useAppSelector(state => state.cart);
 
     const totalCount = counts.reduce((sum, count) => sum + count, 0);
+
     const [isFocused, setIsFocused] = useState(false);
+
     const products = useSelector(categoryReselector);
+
     const [filteredProducts, setFilteredProducts] = useState<ProductType[]>([]);
+
     const handleSearch = () => {
         navigate("/search", { state: { keyword } });
     };
@@ -37,11 +41,13 @@ export const Search: FC = () => {
     const handleHome = () => {
         navigate("/");
     };
+
     useEffect(() => {
         if (keyword.trim() !== "") {
             const results = products.filter((product) =>
                 product.title.toLowerCase().includes(keyword.toLowerCase())
             );
+
             setFilteredProducts(results);
         } else {
             setFilteredProducts([]);
@@ -69,12 +75,12 @@ export const Search: FC = () => {
                             .join(', ')} onChange={() => { }} />
                     <Icon icon="zi-chevron-right" size={16} />
                 </div>
-                <div className="flex h-8 w-90 items-center justify-center rounded-2xl bg-softblue text-10 text-white">
+                <div onClick={()=>navigate('/login')} className="flex h-8 w-90 items-center justify-center rounded-2xl bg-softblue text-10 text-white">
                     <i className="iconnewglobal-user" />
                     <span className="text-nowrap p-1">Đăng nhập</span>
                 </div>
             </div>
-            <div className="flex  w-full justify-center px-2.5  pb-2 relative">
+            <div className="relative  flex w-full justify-center  px-2.5 pb-2">
                 <div onClick={() => setIsOpenDrawer(true)} className="flex w-10 items-center justify-center rounded-l-lg bg-softgray p-2">
                     <i className="iconnewglobal-menu" />
                 </div>
@@ -93,30 +99,30 @@ export const Search: FC = () => {
                     <i className="iconnewglobal-blackcart" />
                 </div>
                 {isFocused && filteredProducts.length > 0 && (
-                    <div className=" w-full h-450 overflow-y-auto absolute top-10 ">
+                    <div className=" absolute top-10 h-450 w-full overflow-y-auto ">
                         <div className="mx-2.5   rounded-lg ">
-                            <div className="w-full rounded-tl-lg rounded-tr-lg text-13 text-blackgray py-1 px-2.5 bg-lightgray">
+                            <div className="w-full rounded-tl-lg rounded-tr-lg bg-lightgray px-2.5 py-1 text-13 text-blackgray">
                                 Có phải bạn muốn tìm
                             </div>
-                            <div className="bg-white w-full text-12 text-navi">
+                            <div className="w-full bg-white text-12 text-navi">
                                 {filteredProducts.slice(0, 5).map((product, index) => (
-                                    <div key={index} className="ms-1 p-2.5 border-b">
+                                    <div key={index} className="ms-1 border-b p-2.5">
                                         <span className="">{product.title}</span>
                                     </div>
                                 ))}
                             </div>
-                            <div className="w-full text-13 text-blackgray py-1 px-2.5 bg-lightgray">
+                            <div className="w-full bg-lightgray px-2.5 py-1 text-13 text-blackgray">
                                 Sản phẩm gợi ý
                             </div>
-                            <div className="bg-white w-full text-12 ">
+                            <div className="w-full bg-white text-12 ">
                                 {filteredProducts.slice(0, 5).map((product, index) => (
-                                    <div onClick={()=> navigate("/detail", { state: { product } })} key={index} className="ms-1 p-2.5 border-b flex">
+                                    <div onClick={()=> navigate("/detail", { state: { product } })} key={index} className="ms-1 flex border-b p-2.5">
                                         <img src={product.thumbnail} className="w-60" />
                                         <div>
                                             <div className="text-14">{product.title}</div>
                                             <div className="font-bold text-orange">Online giá quá rẻ</div>
                                             <div className="flex gap-1">
-                                                <span className="text-red text-14 font-bold">{(product.price * (100 - product.discountPercentage) / 100).toLocaleString("vi-VN")} $</span>
+                                                <span className="text-14 font-bold text-red">{(product.price * (100 - product.discountPercentage) / 100).toLocaleString("vi-VN")} $</span>
                                                 <del>{product.price.toLocaleString("vi-VN")}$</del>
                                                 <span>{product.discountPercentage}%</span>
                                             </div>

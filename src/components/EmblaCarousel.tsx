@@ -1,6 +1,6 @@
 import { categoryReselector } from "@store/reselector/productReselector";
 import useEmblaCarousel from "embla-carousel-react";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback } from "react";
 import { useSelector } from "react-redux";
 
 import { ProductItem } from "./Product/ItemProduct";

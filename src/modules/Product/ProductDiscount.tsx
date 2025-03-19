@@ -18,7 +18,7 @@ export const ProductDiscount: FC = () => {
 
     const showAll = useAppSelector(state => state.showmore.showMoreById["productDiscount"] ?? false);
 
-    const {selectedProvince } = useAppSelector(state=> state.location);
+    const {selectedDistrict } = useAppSelector(state=> state.location);
 
     const [isOpenLocation, setIsOpenLocation] = useState(false);
 
@@ -29,15 +29,15 @@ export const ProductDiscount: FC = () => {
     };
 
     const handleAddToCart = async (product: ProductType) => {
-        if (!selectedProvince) {
-            setIsOpenLocation(true);
+        if (!selectedDistrict) {
+            await setIsOpenLocation(true);
 
-            setToast(true);
         }
+        setToast(true);
 
         await dispatch(addToCart({ product }));
 
-        setToast(true);
+        // setToast(true);
     }
 
     useEffect(() => {
@@ -105,7 +105,7 @@ export const ProductDiscount: FC = () => {
                 </div>
             ))}
             <ShowMore id="productDiscount" />
-            {toast && (<div className="toast absolute right-1 top-12 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
+            {toast && (<div className="absolute right-1 top-12 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
                 <div>
                     <i className="view-cart" />
                     <span>Đã thêm vào giỏ hàng</span>

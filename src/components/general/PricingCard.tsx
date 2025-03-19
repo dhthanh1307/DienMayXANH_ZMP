@@ -18,7 +18,7 @@ export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
     const [toast, setToast] = useState(false);
 
     const handleAddToCart = async (product: ProductType) => {
-        if (!selectedProvince) {
+        if (!selectedDistrict) {
             setIsOpenLocation(true);
 
             setToast(true);
@@ -30,7 +30,7 @@ export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
     }
 
     const handleBuy = async (product: ProductType) => {
-        if (!selectedProvince) {
+        if (!selectedDistrict) {
             setIsOpenLocation(true);
 
             return;
@@ -175,7 +175,7 @@ export const PricingCard: FC<{ product: ProductType }> = ({ product }) => {
             <div className="text-black">
                 <Location isOpen={isOpenLocation} onClose={() => setIsOpenLocation(false)} />
             </div>
-            {toast && (<div className="toast absolute right-1 top-12 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
+            {toast && (<div className="absolute right-1 top-12 h-fit rounded-lg border border-gray1 bg-white p-2.5 text-black">
                 <div>
                     <i className="view-cart" />
                     <span>Đã thêm vào giỏ hàng</span>

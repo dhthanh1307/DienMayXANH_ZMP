@@ -1,8 +1,8 @@
 import { Banner } from "@components/Banner/Banner";
-import { Categories, DiscountSwiper,EmblaCarousel } from "@components/index";
+import { Categories, DiscountSwiper } from "@components/index";
 import { ListView, ProductDiscount, Recommend, Search } from "@modules/index";
 import React, { } from "react";
-import { Box, Page } from "zmp-ui";
+import {  Page } from "zmp-ui";
 export const HomePage: React.FunctionComponent = () => {
   // const navigate = useNavigate();
   return (
@@ -22,7 +22,7 @@ export const HomePage: React.FunctionComponent = () => {
         className="rounded-lg p-2" />
       <DiscountSwiper />
       <ProductDiscount />
-      <EmblaCarousel />
+      {/* <EmblaCarousel /> */}
       <div className="bg-white p-3 text-18 font-bold ">Gợi ý cho bạn</div>
       <Recommend />
       <div className="mt-4 bg-white p-3 text-18 font-bold"> Sản phẩm đặc quyền</div>

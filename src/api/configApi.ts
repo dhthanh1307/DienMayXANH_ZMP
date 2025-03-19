@@ -1,4 +1,6 @@
+import { ACCESSTOKEN, REFRESHTOKEN } from "@utilities/index";
 import axios from "axios";
+import Cookies from "js-cookie" 
 
 const createApiInstance = (baseURL: string) => {
     const axiosInstance = axios.create({
@@ -11,9 +13,9 @@ const createApiInstance = (baseURL: string) => {
 
     axiosInstance.interceptors.request.use(
         (config) => {
-            const accessToken = localStorage.getItem('accessToken');
+            const accessToken = Cookies.get(ACCESSTOKEN);
 
-            const language = localStorage.getItem('language') || 'en';
+            const language =  Cookies.get('language') || 'en';
             if (accessToken) {
                 config.headers['Authorization'] = `Bearer ${accessToken}`;
             }
@@ -32,16 +34,17 @@ const createApiInstance = (baseURL: string) => {
             if (error.response.status === 401 && !originalRequest._retry) {
                 originalRequest._retry = true;
 
-                const refreshToken = localStorage.getItem('refreshToken');
+                const refreshToken =  Cookies.get(REFRESHTOKEN);
                 try {
                     const { data } = await axiosInstance.post('/auth/refresh-token', { token: refreshToken });
 
-                    localStorage.setItem('accessToken', data.accessToken);
+                    Cookies.set(ACCESSTOKEN, data.accessToken);//cookie 
 
                     axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${data.accessToken}`;
 
                     return axiosInstance(originalRequest);
                 } catch (refreshError) {
+                    console.error(refreshError);
                 }
             }
 
@@ -52,8 +55,8 @@ const createApiInstance = (baseURL: string) => {
     return axiosInstance;
 };
 
-const productApi = createApiInstance("https://dummyjson.com");
 
-const locationApi = createApiInstance("https://open.oapi.vn/location");
 
-export { createApiInstance, locationApi, productApi };
+
+
+export { createApiInstance };

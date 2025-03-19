@@ -1,8 +1,7 @@
 import CategoryTab from "@components/general/CategoryTab";
 import { Banner, EmblaCarousel } from "@components/index";
 import { CategoryView } from "@modules/CategoryView";
-import { ListView, Recommend, Search } from "@modules/index";
-import useEmblaCarousel from "embla-carousel-react";
+import { Search } from "@modules/index";
 import React, { useEffect, useRef, useState } from "react";
 import { Page } from "zmp-ui";
 
@@ -49,9 +48,9 @@ export const CategoryPage: React.FunctionComponent = () => {
 
     const sectionRefs = useRef<{ [key: string]: HTMLElement | null }>({});
 
-    const [showHeader, setShowHeader] = useState(false);
+    const [showHeader, setShowHeader] = useState(true);
 
-    const targetRef = useRef<HTMLDivElement | null>(null);
+    const targetRef = useRef<HTMLDivElement | null>(null);                                                                                                                     
 
     useEffect(() => {
         const observer = new IntersectionObserver(
@@ -60,7 +59,6 @@ export const CategoryPage: React.FunctionComponent = () => {
                     if (entry.isIntersecting) {
                         setActiveTab(entry.target.id);
                     }
-
                 });
             },
             { threshold: 0.5 }
@@ -138,7 +136,6 @@ export const CategoryPage: React.FunctionComponent = () => {
                             </div>
                         ))}
                     </div>
-
                 </div>
             </div>
             <div className="flex h-90 items-center" ref={(el) => (sectionRefs.current["section1"] = el)} id="section1">
@@ -152,7 +149,7 @@ export const CategoryPage: React.FunctionComponent = () => {
                 <source  src="https://cdnv2.tgdd.vn/mwg-static/common/Campaign/d3/69/d369263a99fdd91f98db242e10e7b497.mp4" type="video/mp4" />
             </video>
             <EmblaCarousel />
-            <div className="flex h-90 items-center" ref={(el) => (sectionRefs.current["section2"] = el)} id="section2">
+            <div className="flex h-20 items-center" ref={(el) => (sectionRefs.current["section2"] = el)} id="section2">
                 <img className="mx-auto " src="	https://www.dienmayxanh.com/hang-cao-cap/Content/images/home/mobile/line-mobi.png" alt="" />
             </div>
 

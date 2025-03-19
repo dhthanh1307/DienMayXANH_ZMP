@@ -1,19 +1,14 @@
+import { InputProps } from "@type/index";
 import classNames from "classnames";
 import React from "react";
 
-interface InputProps {
-    id: string;
-    label: string;
-    type?: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-}
 
-export const Input: React.FC<InputProps> = ({ id, label, type = "text", value, onChange }) => {
+
+export const Input: React.FC<InputProps> = ({ id, label,value,...props }) => {
     return (
         <div className="relative">
             <input
-                id={id} type={type} value={value} onChange={onChange} placeholder=" "
+                id={id}  value={value} {...props} placeholder=" "
                 className="peer block w-full rounded-lg border border-gray-300 bg-transparent px-2.5 pb-2.5 pt-4 text-sm text-gray-900 focus:border-blue-600 focus:outline-none focus:ring-0 dark:border-gray-600 dark:text-white dark:focus:border-blue-500"
             />
             <label htmlFor={id}

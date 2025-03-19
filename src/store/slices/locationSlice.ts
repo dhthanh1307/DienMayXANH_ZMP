@@ -37,7 +37,7 @@ const initialState: AddressState = {
     districts: [],
     wards: [],
     selectedStreet: '',
-    selectedProvince: null,
+    selectedProvince: {id:"79",name:"Hồ Chí Minh"},
     selectedDistrict: null,
     selectedWard: null,
     loading: {

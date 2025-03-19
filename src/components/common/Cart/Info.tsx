@@ -3,36 +3,36 @@ import React, { FC } from "react";
 
 export const CartInfo: FC<{ product: ProductType, count: number }> = ({ product, count }) => {
     return (
-        <div className="my-2">
+        <div className="">
             <div className="rounded-tl-lg rounded-tr-lg border ">
-                <div className="flex m-2.5" >
-                    <div className="w-10">
+                <div className="flex" >
+                    <div className="w-9">
                         <img src={product.thumbnail} className="w-9" />
                     </div>
-                    <div className="text-12 text-blackgray">
+                    {/* <div className="text-12 text-blackgray">
                         <div>{product.title}</div>
                         <div>
-                            <span>Màu trắng</span> <span className="ms-8">SL: {count}</span>
+                            <span>Màu trắng</span> <span className="">SL: {count}</span>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
             </div>
             <div className=" rounded-bl-lg rounded-br-lg border bg-softgray">
                 <div className="flex justify-between border-b text-14">
-                    <div className="font-bold  m-2.5  ">Giao 20h00-22h00, hôm nay (07/03)</div>
-                    <div className="text-end text-navi  m-2.5  ">Đổi thời gian</div>
+                    {/* <div className="font-bold  m-2.5  ">Giao 20h00-22h00, hôm nay (07/03)</div> */}
+                    {/* <div className="text-end text-navi  m-2.5  ">Đổi thời gian</div> */}
                 </div>
                 <div className=" border-b text-12">
-                    <div className="m-2.5 flex justify-between">
+                    <div className=" flex justify-between">
                         <div >Phí giao hàng</div>
                         <div className="text-red">Miễn phí</div>
                     </div>
                 </div>
                 <div className="  text-12">
-                    <div className="m-2.5">
+                    {/* <div className="m-2.5">
                         Giao bởi nhân viên <i className="sprite-partner_delivery-Dienmayxanh" /> , được đồng kiểm
-                    </div>
+                    </div> */}
                 </div>
             </div>
 

@@ -1,6 +1,6 @@
 import { ProductItem } from "@components/index";
 import { categoryReselector } from "@store/reselector/productReselector";
-import React, { FC, useEffect } from "react";
+import React, { FC } from "react";
 import {  useSelector } from "react-redux";
 
 export const ListView: FC = () => {

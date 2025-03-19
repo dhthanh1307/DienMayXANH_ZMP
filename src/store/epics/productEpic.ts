@@ -1,4 +1,3 @@
-import { productApi } from "@api/api";
 import { Action, PayloadAction } from "@reduxjs/toolkit";
 import { ProductType } from "@type/index";
 import { ofType } from "redux-observable";
@@ -14,12 +13,13 @@ import {
     fetchSearchProducts,
     fetchSearchProductsFailure,
     fetchSearchProductsSuccess} from "../actions/productAction";
+import { productApi } from "@api/index";
 
 export const fetchProductsEpic = (action$: any) =>
     action$.pipe(
         ofType(fetchProducts.type),
         mergeMap(() =>
-            from(productApi.get("/products/category/mobile-accessories")).pipe(
+            from(productApi.fetchProducts("mobile-accessories")).pipe(
                 map(response => fetchProductsSuccess(response.data.products)),
                 catchError(() => of(fetchProductsFailure("Lỗi khi tải sản phẩm")))
             )
@@ -32,7 +32,7 @@ export const fetchSearchProductsEpic = (action$: Observable<Action>) =>
         mergeMap(action => {
             const typedAction = action as PayloadAction<string>;
 
-            return from(productApi.get("/products/search", { params: { q: typedAction.payload } })).pipe(
+            return from(productApi.searchProducts(typedAction.payload)).pipe(
                 map(response => fetchSearchProductsSuccess(response.data.products as ProductType[])),
                 catchError(() => of(fetchSearchProductsFailure("Lỗi khi tìm sản phẩm")))
             );
@@ -43,7 +43,7 @@ export const fetchProductCategoryEpic = (action$: any) =>
     action$.pipe(
         ofType(fetchProductCategory.type),
         mergeMap(() =>
-            from(productApi.get("/products/category/mobile-accessories")).pipe(
+            from(productApi.fetchProducts("mobile-accessories")).pipe(
                 map(response => fetchProductCategorySuccess(response.data.products)),
                 catchError(() => of(fetchProductCategoryFailure("Lỗi khi lấy danh mục sản phẩm")))
             )

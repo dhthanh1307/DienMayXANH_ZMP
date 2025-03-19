@@ -1,4 +1,3 @@
-import { locationApi } from "@api/api";
 import { District, Province } from "@type/index";
 import { Action } from "redux";
 import { ofType } from "redux-observable";
@@ -14,6 +13,7 @@ import {
     fetchWard,
     fetchWardFailure,
     fetchWardSuccess} from "../actions/locationAction";
+import { locationApi } from "@api/index";
 
 interface ProvinceAction extends Action {
     payload?: Province;
@@ -27,7 +27,7 @@ export const fetchProvinceEpic = (action$: any) =>
     action$.pipe(
         ofType(fetchProvince.type),
         mergeMap(() =>
-            from(locationApi.get("/provinces?pages=0&size=63")).pipe(
+            from(locationApi.fetchProvinces()).pipe(
                 map((response) => fetchProvinceSuccess(response.data.data)),
                 catchError(() => of(fetchProvinceFailure("Lỗi khi lấy danh sách tỉnh")))
             )
@@ -38,7 +38,7 @@ export const fetchDistrictEpic = (action$: any) =>
     action$.pipe(
         ofType(fetchDistrict.type),
         mergeMap((action: ProvinceAction) =>
-            from(locationApi.get(`/districts/${action.payload?.id}?pages=0&size=100`)).pipe(
+            from(locationApi.fetchDistricts(action.payload?.id)).pipe(
                 map((response) => fetchDistrictSuccess(response.data.data)),
                 catchError(() => of(fetchDistrictFailure("Lỗi khi lấy danh sách huyện")))
             )
@@ -49,7 +49,7 @@ export const fetchWardEpic = (action$: any) =>
     action$.pipe(
         ofType(fetchWard.type),
         mergeMap((action: DistrictAction) =>
-            from(locationApi.get(`/wards/${action.payload?.id}?pages=0&size=100`)).pipe(
+            from(locationApi.fetchWards(action.payload?.id)).pipe(
                 map((response) => fetchWardSuccess(response.data.data)),
                 catchError(() => of(fetchWardFailure("Lỗi khi lấy danh sách phường")))
             )

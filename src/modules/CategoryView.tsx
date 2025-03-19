@@ -1,10 +1,8 @@
-import { ProductItem, ShowMore } from "@components/index";
+import { ProductItem } from "@components/index";
 import { useAppDispatch } from "@hooks/useAppDispatch";
-import { useAppSelector } from "@hooks/useAppSelector";
 import { fetchProductCategory } from "@store/actions/productAction";
 import { categoryReselector } from "@store/reselector/productReselector";
-import { } from "@store/store";
-import React, { FC, useEffect, useMemo } from "react";
+import React, { FC, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 export const CategoryView: FC<{ button: string }> = ({ button }) => {

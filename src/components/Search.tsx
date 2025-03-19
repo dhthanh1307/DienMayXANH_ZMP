@@ -57,10 +57,13 @@ export const Search: FC = () => {
     return (
         <Box className="bg-navi ">
             <div className="flex w-full justify-center space-x-1 px-2.5 py-2">
+                {/* <div className="flex-none">
+                    <img className="h-8 " src="https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-The-Gioi-Di-Dong-MWG.png" />
+                </div> */}
                 <div className="flex-none">
-                    <img onClick={() => handleHome()} className="h-8 " src="https://cdn.haitrieu.com/wp-content/uploads/2021/11/Logo-The-Gioi-Di-Dong-MWG.png" />
+                    <i onClick={() => handleHome()} className="icon-logo" />
                 </div>
-                <div onClick={() => setIsOpenLocation(true)} className="flex h-8 w-full flex-1  items-center justify-start rounded-2xl bg-softblue p-2 text-10 text-white ">
+                <div onClick={() => setIsOpenLocation(true)} className="flex flex-1 h-8 flex-1  items-center justify-start rounded-2xl bg-softblue p-2 text-10 text-white ">
                     <i className="iconnewglobal-whitelocation" />
                     <input
                         className="w-full truncate bg-softblue p-1 text-10 focus:outline-none"
@@ -72,10 +75,18 @@ export const Search: FC = () => {
                             selectedProvince?.name,
                         ]
                             .filter(Boolean)
-                            .join(', ')} onChange={() => { }} />
+                            .join(', ')} readOnly />
+                    {/* <span className="flex-1 min-w-[90px] max-w-full truncate bg-softblue p-1 text-10">{[
+                        selectedStreet,
+                        selectedWard?.name,
+                        selectedDistrict?.name,
+                        selectedProvince?.name,
+                    ]
+                        .filter(Boolean)
+                        .join(', ')} </span> */}
                     <Icon icon="zi-chevron-right" size={16} />
                 </div>
-                <div onClick={()=>navigate('/login')} className="flex h-8 w-90 items-center justify-center rounded-2xl bg-softblue text-10 text-white">
+                <div onClick={() => navigate('/login')} className="flex h-8 w-90 items-center justify-center rounded-2xl bg-softblue text-10 text-white">
                     <i className="iconnewglobal-user" />
                     <span className="text-nowrap p-1">Đăng nhập</span>
                 </div>
@@ -88,7 +99,11 @@ export const Search: FC = () => {
                     <div onClick={() => handleSearch()}><i className="icon-search m-2" /></div>
                     <input
                         className="w-full bg-white p-1 text-13 focus:outline-none "
-                        type="text"
+                        type="text" onKeyDown={(e) => {
+                            if (e.key === "Enter") {
+                                handleSearch();
+                            }
+                        }}
                         placeholder="Bạn tìm gì..." value={keyword} onChange={(e) => setKeyword(e.target.value)}
                         onFocus={() => setIsFocused(true)}
                         onBlur={() => setTimeout(() => setIsFocused(false), 0)} />
@@ -106,7 +121,7 @@ export const Search: FC = () => {
                             </div>
                             <div className="w-full bg-white text-12 text-navi">
                                 {filteredProducts.slice(0, 5).map((product, index) => (
-                                    <div key={index} className="ms-1 border-b p-2.5">
+                                    <div onClick={() => navigate("/detail", { state: { product } })} key={index} className="ms-1 border-b p-2.5">
                                         <span className="">{product.title}</span>
                                     </div>
                                 ))}
@@ -116,7 +131,7 @@ export const Search: FC = () => {
                             </div>
                             <div className="w-full bg-white text-12 ">
                                 {filteredProducts.slice(0, 5).map((product, index) => (
-                                    <div onClick={()=> navigate("/detail", { state: { product } })} key={index} className="ms-1 flex border-b p-2.5">
+                                    <div onClick={() => navigate("/detail", { state: { product } })} key={index} className="ms-1 flex border-b p-2.5">
                                         <img src={product.thumbnail} className="w-60" />
                                         <div>
                                             <div className="text-14">{product.title}</div>

@@ -1,3 +1,5 @@
+import React from "react";
+
 export interface InputProps {
     id: string;
     label: string;
